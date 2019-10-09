@@ -1,0 +1,9 @@
+/out
+/.idea
+/build
+/.gradle
+/src/main/resources/queue.json
+/src/test/resources/LocalJsonAndroid.json
+/src/test/resources/localJsonIOS.json
+/src/test/resources/PlatfomVersion.json
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="83.112802">
+<testcase classname="SignLogin" name="Sign Login Feature" time="83.112802">
+<failure message="java.lang.AssertionError: Cannot click on Login button from Sign Launcher screen&#13;&#10;&#9;at api.sign.launcher.SignLauncherView.clickOnLoginButton(SignLauncherView.java:93)&#13;&#10;&#9;at cucumber.cucumberTests.SignStepDefinitions.changeServerToStage(SignStepDefinitions.java:296)&#13;&#10;&#9;at ✽.Given Sign in with production user and change server to Stage(src/test/java/cucumber/features/SignLogin.feature:8)&#13;&#10;"><![CDATA[Given Sign in with production user and change server to Stage...............failed
+
+StackTrace:
+java.lang.AssertionError: Cannot click on Login button from Sign Launcher screen
+	at api.sign.launcher.SignLauncherView.clickOnLoginButton(SignLauncherView.java:93)
+	at cucumber.cucumberTests.SignStepDefinitions.changeServerToStage(SignStepDefinitions.java:296)
+	at ✽.Given Sign in with production user and change server to Stage(src/test/java/cucumber/features/SignLogin.feature:8)
+]]></failure>
+</testcase>
+</testsuite>
