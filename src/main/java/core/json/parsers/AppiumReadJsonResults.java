@@ -5,7 +5,7 @@ public class AppiumReadJsonResults {
     /**
      * Desired Capabilities
      */
-    private String DeviceID;
+    public  String DeviceID;
     private String platformVersion;
     private String DeviceName;
     private String appLocation;

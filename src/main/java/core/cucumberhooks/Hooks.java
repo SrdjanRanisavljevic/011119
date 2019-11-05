@@ -1,6 +1,14 @@
 package core.cucumberhooks;
 
 import api.drivers.Drivers;
+import api.sign.completedScreen.CompletedScreen;
+import api.sign.loginScreen.SignLoginScreen;
+import api.sign.sendForSignatureScreen.DelegateThisDocumentScreen;
+import api.sign.sendForSignatureScreen.MessageScreen;
+import api.sign.sendForSignatureScreen.PostSignScreen;
+import api.sign.sendForSignatureScreen.SignScreen;
+import api.sign.settingsScreen.SettingsScreen;
+import api.sign.waitingForYouScreen.WaitingForYouScreen;
 import core.helpers.ADB;
 import core.helpers.MacTerminalCmd;
 import core.helpers.WebHelpers;
@@ -15,6 +23,7 @@ import org.openqa.selenium.TakesScreenshot;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static core.helpers.NetworkHelpers.getConnectionStatus;
@@ -48,10 +57,8 @@ public class Hooks {
     public Date scenarioStartDate() {
         Date scenarioStartDate = new Date();
         testStartDate = scenarioStartDate;
-        MyLogger.log.info("The scenario started at: " + testStartDate);
-
+//        MyLogger.log.info("The scenario started at: " + testStartDate);
         return scenarioStartDate;
-
     }
 
     @Before(order = 2)
@@ -102,6 +109,31 @@ public class Hooks {
             WebHelpers.startIosWebKit();
         }
     }
+
+    @Before(order = 5)
+    public String getScenarioName(Scenario scenario) throws Exception {
+        DelegateThisDocumentScreen.delegateeMessage = "Test: " + scenario.getName() + " executed on " + scenarioStartDate();
+        return MessageScreen.agreementMessage = "Test: " + scenario.getName() + " executed on " + scenarioStartDate();
+        }
+
+    @Before(order = 6)
+    public String getScenarioNumber(Scenario scenario) throws Exception {
+        MyLogger.log.info("AGREEMENT NAME: " + scenario.getName().substring(0,12) + " " + scenarioStartDate());
+        WaitingForYouScreen.agreementName = scenario.getName().substring(0,12) + " " + scenarioStartDate();
+        PostSignScreen.agreementName = scenario.getName().substring(0,12) + " " + scenarioStartDate();
+        CompletedScreen.agreementName = scenario.getName().substring(0,12) + " " + scenarioStartDate();
+       return MessageScreen.agreementName = scenario.getName().substring(0,12) + " " + scenarioStartDate();
+    }
+
+    @Before(order = 7)
+    public void getDeviceId() {
+        ArrayList connectedDevices = ADB.getConnectedDevices();
+        SettingsScreen.deviceId = (String) connectedDevices.get(0);
+        SignLoginScreen.deviceId = (String) connectedDevices.get(0);
+        SignScreen.deviceId = (String) connectedDevices.get(0);
+
+    }
+
 
     @After(order = 2)
     public void finished(Scenario scenario) {

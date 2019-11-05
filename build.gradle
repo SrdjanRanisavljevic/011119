@@ -53,6 +53,7 @@ task entireSuiteCucumber(type: Test) {
 }
 
 dependencies {
+    compile files('libs/create-account-1.0.167391-all.jar')
     testCompile group: 'info.cukes', name: 'cucumber-picocontainer', version: '1.2.5'
     compile group: 'net.sf.flexjson', name: 'flexjson', version: '3.3'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'

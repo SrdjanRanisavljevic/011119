@@ -45,11 +45,21 @@ public class Waiters {
     }
 
     public void waitForElementVisibility(MobileElement element) {
-        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 30);
+        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 180);
         wait.ignoring(NoSuchElementException.class)
                 .pollingEvery(Duration.ofMillis(500))
                 .until(ExpectedConditions.visibilityOf(element));
     }
+
+    // M  A  I  N      W  A  I  T  E  R
+    public void waitForElementVisibilityMobileElement(MobileElement element) {
+        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 180);
+        wait.ignoring(NoSuchElementException.class)
+                .pollingEvery(Duration.ofMillis(500))
+                .until(ExpectedConditions.visibilityOf(element));
+    }
+
+
 
     public void simulateWaiterInsteadOsThreadSleep(MobileElement element, int timeout) {
         WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), timeout);
@@ -57,7 +67,7 @@ public class Waiters {
     }
 
     public void waitForMobileElementToBeClickable(MobileElement element) {
-        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 30);
+        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 180);
         wait.ignoring(NoSuchElementException.class)
                 .pollingEvery(Duration.ofMillis(500))
                 .until(ExpectedConditions.elementToBeClickable(element));

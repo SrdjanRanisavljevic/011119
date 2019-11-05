@@ -1,13 +1,517 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="83.112802">
-<testcase classname="SignLogin" name="Sign Login Feature" time="83.112802">
-<failure message="java.lang.AssertionError: Cannot click on Login button from Sign Launcher screen&#13;&#10;&#9;at api.sign.launcher.SignLauncherView.clickOnLoginButton(SignLauncherView.java:93)&#13;&#10;&#9;at cucumber.cucumberTests.SignStepDefinitions.changeServerToStage(SignStepDefinitions.java:296)&#13;&#10;&#9;at ✽.Given Sign in with production user and change server to Stage(src/test/java/cucumber/features/SignLogin.feature:8)&#13;&#10;"><![CDATA[Given Sign in with production user and change server to Stage...............failed
-
-StackTrace:
-java.lang.AssertionError: Cannot click on Login button from Sign Launcher screen
-	at api.sign.launcher.SignLauncherView.clickOnLoginButton(SignLauncherView.java:93)
-	at cucumber.cucumberTests.SignStepDefinitions.changeServerToStage(SignStepDefinitions.java:296)
-	at ✽.Given Sign in with production user and change server to Stage(src/test/java/cucumber/features/SignLogin.feature:8)
-]]></failure>
+<testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="8" time="10297.996214">
+<testcase classname="SignLogin" name="DCES-4199633 [Android] Shard EU1: Send for Signature : Parallel Delegate Approval" time="1268.572036">
+<system-out><![CDATA[Given The environment is set to: "stage"....................................passed
+And Log in with user from "EU1".............................................passed
+And Click on send for signature.............................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Enter recipient from shard: "NA1".......................................passed
+And Enter recipient from shard: "EU2".......................................passed
+And Enter recipient from shard: "IN1".......................................passed
+And Enter recipient from shard: "JP1".......................................passed
+And Turn off complete in order listed.......................................passed
+And Assign delegator to approver role to the recipient from shard: "NA1"....passed
+And Assign delegator to approver role to the recipient from shard: "EU2"....passed
+And Assign delegator to approver role to the recipient from shard: "IN1"....passed
+And Assign delegator to approver role to the recipient from shard: "JP1"....passed
+And Click on done on Recipients Page........................................passed
+And Click on send button....................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to delegate and click on it...................passed
+And Delegate agreement for approval to the recipient from shard: "NA2"......passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to delegate and click on it...................passed
+And Delegate agreement for approval to the recipient from shard: "AU1"......passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "IN1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to delegate and click on it...................passed
+And Delegate agreement for approval to the recipient from shard: "NA3"......passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to delegate and click on it...................passed
+And Delegate agreement for approval to the recipient from shard: "EU1B".....passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU1B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU1".............................................passed
+Then Click on Completed and verify that the document is in completed folder.passed
+]]></system-out>
+</testcase>
+<testcase classname="SignLogin" name="DCES-4199634 [Android] Shard EU2: Send for Signature : Sequential Delegate Signing" time="1278.76195">
+<system-out><![CDATA[Given The environment is set to: "stage"....................................passed
+And Log in with user from "EU2".............................................passed
+And Click on send for signature.............................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Enter recipient from shard: "AU1".......................................passed
+And Enter recipient from shard: "EU1".......................................passed
+And Enter recipient from shard: "NA2".......................................passed
+And Enter recipient from shard: "NA3".......................................passed
+And Assign delegator to signer role to the recipient from shard: "AU1"......passed
+And Assign delegator to signer role to the recipient from shard: "EU1"......passed
+And Assign delegator to signer role to the recipient from shard: "NA2"......passed
+And Assign delegator to signer role to the recipient from shard: "NA3"......passed
+And Click on done on Recipients Page........................................passed
+And Click on send button....................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to delegate and click on it...................passed
+And Delegate agreement for signing to the recipient from shard: "NA1".......passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to delegate and click on it...................passed
+And Delegate agreement for signing to the recipient from shard: "JP1".......passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to delegate and click on it...................passed
+And Delegate agreement for signing to the recipient from shard: "NA1B"......passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA1B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to delegate and click on it...................passed
+And Delegate agreement for signing to the recipient from shard: "IN1".......passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "IN1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU2".............................................passed
+Then Click on Completed and verify that the document is in completed folder.passed
+]]></system-out>
+</testcase>
+<testcase classname="SignLogin" name="DCES-4199635 [Android] Shard IN1: Send for Signature : Parallel signing" time="1527.065195">
+<system-out><![CDATA[Given The environment is set to: "stage"....................................passed
+And Log in with user from "IN1".............................................passed
+And Click on send for signature.............................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Turn off complete in order listed.......................................passed
+And Enter recipient from shard: "NA1".......................................passed
+And Enter recipient from shard: "EU1".......................................passed
+And Enter recipient from shard: "EU2".......................................passed
+And Enter recipient from shard: "AU1".......................................passed
+And Enter recipient from shard: "JP1".......................................passed
+And Enter recipient from shard: "NA2".......................................passed
+And Enter recipient from shard: "IN1B"......................................passed
+And Enter recipient from shard: "NA3".......................................passed
+And Click on Add Me button..................................................passed
+And Click on done on Recipients Page........................................passed
+And Click on send button....................................................passed
+And Sign the agreement when agreement automatically loads for signing in paralel workflow.passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "IN1B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "IN1".............................................passed
+Then Click on Completed and verify that the document is in completed folder.passed
+]]></system-out>
+</testcase>
+<testcase classname="SignLogin" name="DCES-4199636 [Android] Shard AU1: Send for Signature : Sequential Signing" time="1618.928132">
+<system-out><![CDATA[Given The environment is set to: "stage"....................................passed
+And Log in with user from "AU1".............................................passed
+And Click on send for signature.............................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Enter recipient from shard: "NA1".......................................passed
+And Enter recipient from shard: "EU2".......................................passed
+And Enter recipient from shard: "EU1".......................................passed
+And Enter recipient from shard: "AU1B"......................................passed
+And Enter recipient from shard: "JP1".......................................passed
+And Enter recipient from shard: "NA2".......................................passed
+And Enter recipient from shard: "IN1".......................................passed
+And Enter recipient from shard: "NA3".......................................passed
+And Click on Add Me button..................................................passed
+And Click on done on Recipients Page........................................passed
+And Click on send button....................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "IN1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1".............................................passed
+Then Click on Completed and verify that the document is in completed folder.passed
+]]></system-out>
+</testcase>
+<testcase classname="SignLogin" name="DCES-4199637 [Android] Shard NA1: In person : Parallel approver" time="804.401864">
+<system-out><![CDATA[Given The environment is set to: "stage"....................................passed
+And Log in with user from "NA1".............................................passed
+And Click on get signature in person........................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Turn off complete in order listed.......................................passed
+And Enter recipient from shard: "NA1B"......................................passed
+And Enter recipient from shard: "EU1".......................................passed
+And Enter recipient from shard: "EU2".......................................passed
+And Enter recipient from shard: "AU1".......................................passed
+And Enter recipient from shard: "JP1".......................................passed
+And Enter recipient from shard: "NA2".......................................passed
+And Enter recipient from shard: "IN1".......................................passed
+And Enter recipient from shard: "NA3".......................................passed
+And Click on Add Me button..................................................passed
+And Click on done on Recipients Page........................................passed
+And Click on send button on get signature in person.........................passed
+And Sign the agreement when agreement automatically loads for signing in paralel workflow.passed
+And Sign the agreement in in person signing flow............................passed
+And Click on waiting for others.............................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Select signer on WFO screen in paralel workflow - from shard :"EU1".....passed
+And Sign the agreement in in person signing flow............................passed
+And Select agreement you want to sign and click on it.......................passed
+And Select signer on WFO screen in paralel workflow - from shard :"EU2".....passed
+And Sign the agreement in in person signing flow............................passed
+And Select agreement you want to sign and click on it.......................passed
+And Select signer on WFO screen in paralel workflow - from shard :"AU1".....passed
+And Sign the agreement in in person signing flow............................passed
+And Select agreement you want to sign and click on it.......................passed
+And Select signer on WFO screen in paralel workflow - from shard :"JP1".....passed
+And Sign the agreement in in person signing flow............................passed
+And Select agreement you want to sign and click on it.......................passed
+And Select signer on WFO screen in paralel workflow - from shard :"NA2".....passed
+And Sign the agreement in in person signing flow............................passed
+And Select agreement you want to sign and click on it.......................passed
+And Select signer on WFO screen in paralel workflow - from shard :"IN1".....passed
+And Sign the agreement in in person signing flow............................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement in in person signing flow............................passed
+And Click on back button on waiting for others screen.......................passed
+And Click on Completed and verify that the document is in completed folder..passed
+]]></system-out>
+</testcase>
+<testcase classname="SignLogin" name="DCES-4199638 [Android] Shard JP1: In Person Signing : Sequential Approval" time="1155.299661">
+<system-out><![CDATA[Given The environment is set to: "stage"....................................passed
+And Log in with user from "JP1".............................................passed
+And Click on get signature in person........................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Enter in person signer from shard: "NA1"................................passed
+And Assign Approver role to the recipient from shard: "NA1".................passed
+And Enter additional signer from shard: "EU1"...............................passed
+And Assign Approver role to the recipient from shard: "EU1".................passed
+And Enter additional signer from shard: "EU2B"..............................passed
+And Assign Approver role to the recipient from shard: "EU2B"................passed
+And Enter additional signer from shard: "AU1"...............................passed
+And Assign Approver role to the recipient from shard: "AU1".................passed
+And Enter additional signer from shard: "JP1B"..............................passed
+And Assign Approver role to the recipient from shard: "JP1B"................passed
+And Enter additional signer from shard: "NA2"...............................passed
+And Assign Approver role to the recipient from shard: "NA2".................passed
+And Enter additional signer from shard: "IN1"...............................passed
+And Assign Approver role to the recipient from shard: "IN1".................passed
+And Enter additional signer from shard: "NA3"...............................passed
+And Assign Approver role to the recipient from shard: "NA3".................passed
+And Click on Add Me button..................................................passed
+And Assign Approver role to the recipient from shard: "JP1".................passed
+And Click on done on Recipients Page........................................passed
+And Click on send button on get signature in person.........................passed
+And Approve the agreement in in person signing flow.........................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU2B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "IN1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Click on Completed and verify that the document is in completed folder..passed
+]]></system-out>
+</testcase>
+<testcase classname="SignLogin" name="DCES-4212956 [Android] Shard NA3: Send for Signature : Sequential Signing" time="1474.495682">
+<system-out><![CDATA[Given The environment is set to: "stage"....................................passed
+And Log in with user from "NA3".............................................passed
+And Click on send for signature.............................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Enter recipient from shard: "NA1".......................................passed
+And Enter recipient from shard: "EU1".......................................passed
+And Enter recipient from shard: "EU2".......................................passed
+And Enter recipient from shard: "AU1".......................................passed
+And Enter recipient from shard: "JP1".......................................passed
+And Enter recipient from shard: "NA2".......................................passed
+And Enter recipient from shard: "IN1".......................................passed
+And Enter recipient from shard: "NA3B"......................................passed
+And Click on Add Me button..................................................passed
+And Click on done on Recipients Page........................................passed
+And Click on send button....................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "IN1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to sign and click on it.......................passed
+And Sign the agreement......................................................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3".............................................passed
+Then Click on Completed and verify that the document is in completed folder.passed
+]]></system-out>
+</testcase>
+<testcase classname="SignLogin" name="DCES-4199638 [Android] Shard JP1: In Person Signing : Sequential Approval" time="1170.471694">
+<system-out><![CDATA[Given The environment is set to: "stage"....................................passed
+And Log in with user from "JP1".............................................passed
+And Click on get signature in person........................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Enter in person signer from shard: "NA1"................................passed
+And Assign Approver role to the recipient from shard: "NA1".................passed
+And Enter additional signer from shard: "EU1"...............................passed
+And Assign Approver role to the recipient from shard: "EU1".................passed
+And Enter additional signer from shard: "EU2B"..............................passed
+And Assign Approver role to the recipient from shard: "EU2B"................passed
+And Enter additional signer from shard: "AU1"...............................passed
+And Assign Approver role to the recipient from shard: "AU1".................passed
+And Enter additional signer from shard: "JP1B"..............................passed
+And Assign Approver role to the recipient from shard: "JP1B"................passed
+And Enter additional signer from shard: "NA2"...............................passed
+And Assign Approver role to the recipient from shard: "NA2".................passed
+And Enter additional signer from shard: "IN1"...............................passed
+And Assign Approver role to the recipient from shard: "IN1".................passed
+And Enter additional signer from shard: "NA3"...............................passed
+And Assign Approver role to the recipient from shard: "NA3".................passed
+And Click on Add Me button..................................................passed
+And Assign Approver role to the recipient from shard: "JP1".................passed
+And Click on done on Recipients Page........................................passed
+And Click on send button on get signature in person.........................passed
+And Approve the agreement in in person signing flow.........................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "EU2B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "AU1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1B"............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA2".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "IN1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "NA3".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Sign out - from home screen.............................................passed
+And Log in with user from "JP1".............................................passed
+And Click on waiting for you................................................passed
+And Select agreement you want to Approve and click on it....................passed
+And Click on Approve button on agreements screen............................passed
+And Click on Completed and verify that the document is in completed folder..passed
+]]></system-out>
 </testcase>
 </testsuite>

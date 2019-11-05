@@ -226,6 +226,11 @@ public class AssertsUtils {
         AssertEquals(By.xpath(xpath), expectedValue, attribute, errorMessage);
     }
 
+    public void AssertEquals(String expectedValue, String errorMessage) {
+        AssertEquals(expectedValue, errorMessage);
+    }
+
+
     private void AssertEquals(By by, String expectedValue, Attribute attribute, String errorMessage) {
         assertEquals(expectedValue, Drivers.getMobileDriver().findElement(by).getAttribute(attribute.toString()));
     }
