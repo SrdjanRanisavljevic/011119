@@ -19,7 +19,7 @@ import api.drivers.Drivers;
 
 import java.io.FileNotFoundException;
 
-public class DocumentsScreen {
+public class DocumentsScreen extends SignScreen{
 
 
     public DocumentsScreen() {
@@ -54,13 +54,10 @@ public class DocumentsScreen {
     @AndroidFindBy(xpath = "//android.widget.LinearLayout")
     private Toast ScanDocumentAndAttachToast;
 
-//    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Scan documents\")")
-//    private Toast scanDocumentAndAttachToast;
-
     @AndroidFindBy(xpath = "//android.widget.LinearLayout[2]")
     private MobileElement documentsOnThisDevice;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"EmptyDoc\")")
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"TestDoc\")")
     private MobileElement emptyDoc;
 
 
@@ -91,7 +88,7 @@ public class DocumentsScreen {
         }
     }
 
-    public DocumentsScreen chooseEmptyDocFromThePhone() {
+    public DocumentsScreen chooseTestDocFromPhoneStorage() {
         try {
             MyLogger.log.info("Clicking on Empty Doc from phone");
             gestures.clickOnWebElement(emptyDoc);
@@ -101,19 +98,8 @@ public class DocumentsScreen {
         }
     }
 
-    public DocumentsScreen clickDone() {
-        try {
-            MyLogger.log.info("Clicking on Done button on documents page");
-            gestures.clickOnWebElement(done);
-            return this;
-        }catch (WebDriverException e) {
-            throw new AssertionError("Cannot click done button on documents page");
-        }
-    }
 
     public  DocumentsScreen swipUpUntilYouFindEmptyDoc () throws FileNotFoundException {
-        Waiters waiters = new Waiters();
-         //Waiter should be inserted here
         boolean isDocumentVisible = false;
         while (!isDocumentVisible) {
             Swipe.customSwipeUp();
@@ -121,6 +107,7 @@ public class DocumentsScreen {
         }
         return this;
     }
+
 
 
     public DocumentsScreen clickOnAllowOnPopUp() {

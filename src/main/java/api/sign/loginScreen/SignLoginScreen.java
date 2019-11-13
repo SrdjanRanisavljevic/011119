@@ -24,8 +24,8 @@ public class SignLoginScreen {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
-    private String usermail = runningSetup().getUsermail();
-    private String userPassword = runningSetup().getUserpassword();
+
+    private String userPassword = runningSetup().getUserPassword();
     private final Waiters waiters = new Waiters();
     private final AssertsUtils assertsUtils = new AssertsUtils();
     private final Gestures gestures = new Gestures();
@@ -73,7 +73,7 @@ public class SignLoginScreen {
                 MyLogger.log.info("Clicking on sign in button on login screen using S7");
                 waiters.waitForMobileElementToBeClickable(signInButton);
                 try {
-                    Thread.sleep(2000);
+                waiters.sleep(2000);
                 }catch (Exception e) {throw new AssertionError("Cannot sleep");}
                 new TouchAction(Drivers.getMobileDriver()).press(PointOption.point(500, 1070))
                         .release()

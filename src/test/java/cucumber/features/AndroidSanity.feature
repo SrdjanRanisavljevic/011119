@@ -1,12 +1,12 @@
 Feature: AndroidSanity
 
-#Background:
-#Given User is in Launcher Screen
+Background: Set the environment
+Given User set the environent
 
 
   @reggression @stage @multishard @android
 Scenario: DCMEA-0003312 In Person Signing - Sequential Approval EU1 - NA1- JP1
-    Given The environment is set to: "stage"
+
     And Log in with user from "EU1"
     And Click on get signature in person
     And Select document from phone storage
@@ -173,7 +173,7 @@ Scenario: DCMEA-0001599 Shard NA2: Send for Signature : Sequential Delegate sign
     And Click on Completed and verify that the document is in completed folder
 
 
-    @reggression @stage @multishard @android @NA2
+@reggression @stage @multishard @android @NA2
 Scenario: DCMEA-0003295 4 Shards: NA1 to EU1 to JP1 to AU1 : Send for Signature - Sequential Signing
     Given The environment is set to: "stage"
     And Log in with user from "NA1"
@@ -242,4 +242,56 @@ Scenario: DCMEA-0000466 Send for Signature - Parallel Approval workflow
 
     And Click on Completed and verify that the document is in completed folder
 
+
+
+Scenario: DCMEA-0003340 Delegate to Approve - Parallel In Person Signing
+    And Log in with user from "NA1"
+    And Click on get signature in person
+    And Select document from phone storage
+    And Enter agreement name and message
+    And Click on recipients button on send page
+    And Turn off complete in order listed
+    And Enter in person signer from shard: "AU1B"
+    And Enter additional signer from shard: "NA1B"
+    And Enter additional signer from shard: "JP1B"
+    And Assign delegator to approver role to the recipient from shard: "NA1B"
+    And Assign delegator to approver role to the recipient from shard: "JP1B"
+    And Click on done on Recipients Page
+    And Click on send button on get signature in person
+
+    And Sign the agreement in in person signing flow
+
+    And Click on waiting for others
+    And Verify that sign/delegate/approve buttons are not present
+    And Click on back button on waiting for others screen
+    And Sign out - from home screen
+
+    And Log in with user from "NA1B"
+    And Click on waiting for you
+    And Select agreement you want to delegate and click on it
+    And Delegate agreement for approval to the recipient from shard: "NA2B"
+    And Click on waiting for others
+    And Verify that sign/delegate/approve buttons are not present
+    And Click on back button on waiting for others screen
+    And Sign out - from home screen
+
+    And Log in with user from "JP1B"
+    And Click on waiting for you
+    And Select agreement you want to delegate and click on it
+    And Delegate agreement for approval to the recipient from shard: "IN1B"
+    And Sign out - from home screen
+
+    And Log in with user from "IN1B"
+    And Click on waiting for you
+    And Select agreement you want to Approve and click on it
+    And Click on Approve button on agreements screen
+    And Sign out - from home screen
+
+    And Log in with user from "NA2B"
+    And Click on waiting for you
+    And Select agreement you want to Approve and click on it
+    And Click on Approve button on agreements screen
+
+    And Click on Completed and verify that the document is in completed folder
+    And Sign out - from home screen
 

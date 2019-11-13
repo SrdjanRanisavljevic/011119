@@ -16,7 +16,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.PageFactory;
 import api.drivers.Drivers;
 
-public class MessageScreen {
+public class MessageScreen extends SignScreen {
 
     public MessageScreen() {
         AppiumDriver driver = Drivers.getMobileDriver();
@@ -39,8 +39,6 @@ public class MessageScreen {
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/agreement_body\")")
     private MobileElement agreementBody;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/send_done_button\")")
-    private MobileElement doneButtonOnMessagePage;
 
 
     public MessageScreen enterAgreementName() {
@@ -66,16 +64,6 @@ public class MessageScreen {
             return this;
         }catch (WebDriverException e) {
             throw new AssertionError("Cannot enter Agreement Message");
-        }
-    }
-
-    public MessageScreen clickOnDone() {
-        try {
-            MyLogger.log.info("Clicking On Done Button on message page");
-            gestures.clickOnMobileElement(doneButtonOnMessagePage);
-            return this;
-        }catch (WebDriverException e) {
-            throw new AssertionError("Cannot click on Done button on message page");
         }
     }
 

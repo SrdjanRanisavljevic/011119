@@ -59,6 +59,15 @@ public class Waiters {
                 .until(ExpectedConditions.visibilityOf(element));
     }
 
+    // M A I N    S L E E P    W A I T E R
+    public void sleep(int time) {
+        try {
+            MyLogger.log.info("Sleeping now for " + time/1000 + " seconds because there is no better solution");
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            MyLogger.log.debug("Cannot Sleep");
+        }
+    }
 
 
     public void simulateWaiterInsteadOsThreadSleep(MobileElement element, int timeout) {

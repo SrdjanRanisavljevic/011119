@@ -19,7 +19,7 @@ import api.drivers.Drivers;
 import java.io.FileNotFoundException;
 
 
-public class RecipientsScreen {
+public class RecipientsScreen extends SignScreen {
 
     public RecipientsScreen() {
         AppiumDriver driver = Drivers.getMobileDriver();
@@ -73,16 +73,6 @@ public class RecipientsScreen {
             return this;
         }catch (WebDriverException e) {
             throw new AssertionError("Cannot click on Complete in Order Listed");
-        }
-    }
-
-    public RecipientsScreen clickOnDone() {
-        try {
-            MyLogger.log.info("Clicking On Done Button on Recipients Page");
-            gestures.clickOnMobileElement(done);
-            return this;
-        }catch (WebDriverException e) {
-            throw new AssertionError("Cannot click on Done button on Recipients Page");
         }
     }
 

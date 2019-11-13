@@ -1,6 +1,7 @@
 package api.sign.launcherScreen;
 
 import api.drivers.Drivers;
+import api.sign.waitingForYouScreen.WaitingForYouScreen;
 import core.classic.methods.AssertsUtils;
 import core.classic.methods.Gestures;
 import core.classic.methods.Swipe;
@@ -54,6 +55,9 @@ public class SignLauncherScreen {
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Sign on the go\")")
     private MobileElement signOnTheGo;
 
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"android:id/button2\")")
+    private MobileElement dismissButton;
+
 
 
     //    public SignLauncherScreen validateElementsLauncherScreem() {
@@ -87,7 +91,7 @@ public class SignLauncherScreen {
             AppiumDriver driver = Drivers.getMobileDriver();
             MyLogger.log.info("Click right arrow button 3 times to get to Sign In button");
                  Thread.sleep(2000);
-///                waiters.waitForElementVisibilityMobileElement(yourMobileCompanion);
+                waiters.waitForMobileElementToBeClickable(yourMobileCompanion);
                 ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DPAD_RIGHT));
                 ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DPAD_RIGHT));
                 waiters.waitForElementVisibilityMobileElement(menageDocuments);
@@ -97,6 +101,7 @@ public class SignLauncherScreen {
                 waiters.waitForElementVisibilityMobileElement(signOnTheGo);
             return this;
         } catch (Exception e){
+            e.printStackTrace();
             throw new AssertionError("Cannot click on righ arrow button for 3 times");
         }
     }
@@ -123,7 +128,20 @@ public class SignLauncherScreen {
             throw new AssertionError("Cannot click on Login button from Sign Launcher screen");
         }
     }
-//
+
+
+    public SignLauncherScreen dismissUpdateMessageIfPresent() {
+        MyLogger.log.info("Click on dismiss button on UPDATE AVAILABLE message");
+        if(new AssertsUtils().isElementVisible(dismissButton)) {
+            waiters.waitForMobileElementToBeClickable(dismissButton);
+            gestures.clickOnMobileElement(dismissButton);
+            return this;
+        }
+        MyLogger.log.info("Update available dialog not present, continue with login...");
+        return this;
+    }
+
+
 //    public SignLauncherScreen clickOnDontAllowNotificationBtn() {
 //        try {
 //            MyLogger.log.info("Check if Send Notification Pop-Up is displayed");

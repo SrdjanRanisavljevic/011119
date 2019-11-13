@@ -1,5 +1,7 @@
 package api.sign.waitingForYouScreen;
 
+import api.sign.sendForSignatureScreen.RecursionLimiter;
+import com.jcraft.jsch.Session;
 import core.classic.methods.AssertsUtils;
 import core.classic.methods.Gestures;
 import core.classic.methods.Swipe;
@@ -7,15 +9,24 @@ import core.classic.methods.Waiters;
 import core.watchers.MyLogger;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.Mouse;
 import org.openqa.selenium.support.PageFactory;
 import api.drivers.Drivers;
 
 import java.io.FileNotFoundException;
+import java.time.Duration;
 import java.util.*;
 
 public class WaitingForYouScreen {
@@ -65,6 +76,14 @@ public class WaitingForYouScreen {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/sign_menu\")")
     private MobileElement signButtonInMoreMenu;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/home_overflow_menu\")")
+    private MobileElement moreButtonDropDown;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/history_menu\")")
+    private MobileElement historyOnMoreMenu;
+
+
 
 
     // Finding "NO DOCUMENTS" on WFY page does not fail the test. It is posible scenario, in case user had only this agreement on Waiting for you screen
@@ -159,7 +178,7 @@ public class WaitingForYouScreen {
 
 
     public WaitingForYouScreen clickOnAgreementOnWaitingForYouPage() throws FileNotFoundException {
-//         RecursionLimiter.emerge();
+//        RecursionLimiter.emerge();
         try {
             MyLogger.log.info("Trying to find the document;");
             AppiumDriver driver = Drivers.getMobileDriver();
@@ -193,7 +212,7 @@ public class WaitingForYouScreen {
 
     public void sleep(int time) {
         try {
-            MyLogger.log.info("Sleeping now because i cannot find better solution");
+            MyLogger.log.info("Sleeping now for " + time/1000 + " seconds because there is no better solution");
             Thread.sleep(time);
         } catch (InterruptedException e) {
             MyLogger.log.debug("Cannot Sleep");
@@ -215,6 +234,23 @@ public class WaitingForYouScreen {
             throw new AssertionError("Cannot dismiss Tap to Reveal Quick Actions Bubble");
         }
     }
+
+    public WaitingForYouScreen dismissMoreButtonDropDown() {
+        try {
+            MyLogger.log.info("Dismiss More Button Drop Down");
+            AppiumDriver driver = Drivers.getMobileDriver();
+            waiters.waitForElementVisibilityMobileElement(historyOnMoreMenu);
+            sleep(1000);
+            ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.ESCAPE));
+            return this;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Cannot dismiss More Button Drop Down");
+        }
+    }
+
+
+
 }
 
 

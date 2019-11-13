@@ -40,13 +40,16 @@ public class SignScreen {
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"start\")")
     private MobileElement start;
 
-    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[1]/android.view.View[2]/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View[2]/android.view.View]")
+    @AndroidFindBy(xpath = "//android.view.View[5]/android.view.View/android.view.View[2]/android.view.View]")
     private MobileElement finish;
+
+    @AndroidFindBy(xpath = "//android.view.View[5]/android.view.View/android.view.View/android.view.View[3]")
+    private MobileElement finishOnTablet;
 
     @AndroidFindBy(xpath = "//android.widget.Button")
     private MobileElement signatureField;
 
-    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View[2]/android.view.View")
+    @AndroidFindBy(xpath = "//android.view.View[2]/android.view.View")
     private MobileElement signatureFieldClickToEdit;
 
     @AndroidFindBy(xpath = "//android.widget.Button[2]")
@@ -58,19 +61,25 @@ public class SignScreen {
     @AndroidFindBy(xpath = "//android.view.View[2]")
     private MobileElement tapToChange;
 
-    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.app.Dialog/android.view.View/android.view.View[2]/android.view.View[1]/android.widget.TabWidget/android.view.View[1]")
+    @AndroidFindBy(xpath = "//android.widget.TabWidget/android.view.View[1]")
     private MobileElement keyboardIcon;
 
-    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.app.Dialog/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[2]/android.widget.Button[2]")
+    @AndroidFindBy(xpath = "//android.view.View[3]/android.view.View[2]/android.widget.Button[2]")
     private MobileElement applyOnEditSignatureScreen;
 
-    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.app.Dialog/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[2]/android.widget.EditText")
+    @AndroidFindBy(xpath = "//android.widget.EditText")
     private MobileElement nameField;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/send_done_button\")")
+    private MobileElement doneButton;
 
 
 
 
     public SignScreen clickOnStartButton() {
+        AppiumDriver driver = Drivers.getMobileDriver();
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        MyLogger.log.info("CONTEXT IS: " + driver.getContext());
         try {
             MyLogger.log.info("Click on start button");
             waiters.waitForMobileElementToBeClickable(start);
@@ -94,6 +103,9 @@ public class SignScreen {
     }
 
     public SignScreen clickOnKeyboardIcon() {
+        AppiumDriver driver = Drivers.getMobileDriver();
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        MyLogger.log.info("CONTEXT IS: " + driver.getContext());
         try {
             MyLogger.log.info("Click on keyboard icon");
             waiters.waitForMobileElementToBeClickable(keyboardIcon);
@@ -160,10 +172,17 @@ public class SignScreen {
             if(deviceId.equals("ce041604406c423d01")) {
                 MyLogger.log.info("Clicking on FINISH button on sign editor using S7");
                 waiters.waitForElementVisibilityMobileElement(signatureField);
-                Thread.sleep(5000);
+                Thread.sleep(3000);
                 new TouchAction(Drivers.getMobileDriver()).press(PointOption.point(980, 330))
                         .release()
                         .perform();
+                return this;
+            }
+            if (deviceId.equals("3204db2bb5fe7121")) {
+                MyLogger.log.info("Click on finish button on tablet");
+                Thread.sleep(3000);
+                waiters.waitForElementVisibilityMobileElement(finishOnTablet);
+                gestures.clickOnMobileElement(finishOnTablet);
                 return this;
             }
             else{
@@ -175,6 +194,31 @@ public class SignScreen {
         }catch (Exception e) {
             e.printStackTrace();
             throw new AssertionError("Could not click on Finish button on Sign editor");
+        }
+    }
+
+    public SignScreen clickDone() {
+        if (checkIfDoneButtonIsPresent()) {
+            try {
+                MyLogger.log.info("Clicking on Done button on documents/recipients/message page");
+                gestures.clickOnWebElement(doneButton);
+                return this;
+            } catch (WebDriverException e) {
+                throw new AssertionError("Cannot click done button on documents/recipients/message page");
+            }
+        } else {
+            MyLogger.log.info("Done button is not present, test is being executed on tablet device");
+            return this;
+        }
+    }
+
+    // this method is necessary because tablets do not have done button document screen
+    public boolean checkIfDoneButtonIsPresent() {
+        MyLogger.log.info("Check if done button is present");
+        if((new AssertsUtils().isElementVisible(doneButton))) {
+            return true;
+        } else {
+            return false;
         }
     }
 

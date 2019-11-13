@@ -11,21 +11,26 @@ import api.sign.sendForSignatureScreen.*;
 import api.sign.settingsScreen.SettingsScreen;
 import api.sign.waitingForOthersScreen.WaitingForOthersScreen;
 import api.sign.waitingForYouScreen.WaitingForYouScreen;
+import core.json.parsers.AppiumReadJsonResults;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-
 import java.io.FileNotFoundException;
+
+import static core.json.parsers.ConfigJasonFileReading.getAndroidJasonResults;
 
 public class SignStepDefinitions {
 
     private Users users = new Users();
+    AppiumReadJsonResults appiumReadJsonResults = new AppiumReadJsonResults();
 
     // L O G       I N       W I T H       D I F F E R E N T      S H A R D S
 
 
     @And("^Log in with user from \"([^\"]*)\"$")
     public void logIn(String arg0) throws FileNotFoundException, InterruptedException {
+        new SignLauncherScreen().dismissUpdateMessageIfPresent();
         new SignLoginScreen()
                 .enterUserName(users.getUser(arg0))
                 .enterPassword()
@@ -95,7 +100,7 @@ public class SignStepDefinitions {
 
     @And("^Click on done on Recipients Page$")
     public void clickDoneOnRecipientsPage() throws FileNotFoundException {
-        new RecipientsScreen().clickOnDone();
+        new RecipientsScreen().clickDone();
     }
 
 
@@ -106,6 +111,7 @@ public class SignStepDefinitions {
     public void setServer(String arg0) throws FileNotFoundException {
         if(arg0.equalsIgnoreCase("production")) {
             new SignLauncherScreen()
+                    .dismissUpdateMessageIfPresent()
                     .clickRightArrowButtonToGetToSignInButton()
                     .clickOnLoginButton();
         } else {
@@ -131,6 +137,35 @@ public class SignStepDefinitions {
         }
     }
 
+    @Given("^User set the environent$")
+    public void setServer() throws FileNotFoundException {
+        if(((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("production"))) {
+            new SignLauncherScreen()
+                    .dismissUpdateMessageIfPresent()
+                    .clickRightArrowButtonToGetToSignInButton()
+                    .clickOnLoginButton();
+        } else {
+            new SignLauncherScreen()
+                    .clickRightArrowButtonToGetToSignInButton()
+                    .clickOnLoginButton();
+            new SignLoginScreen()
+                    .enterUserName(users.getProdUser())
+                    .enterPassword()
+                    .clickOnSignInButton();
+            new HomeScreen()
+                    .clickOnSettingsButton();
+            new SettingsScreen()
+                    .clickOnAboutButton()
+                    .clickOnVersionButton()
+                    .clickYesOrOk();
+            if (((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("stage"))) {
+                new SettingsScreen().chooseStageServer().clickYesOrOk();
+            }
+            if (((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("preview"))) {
+                new SettingsScreen().clickYesOrOk();
+            }
+        }
+    }
 
 
     // S  E  N  D      S   C   R   E   E   N       S   T   E   P   S
@@ -151,7 +186,7 @@ public class SignStepDefinitions {
                 .clickOnAllowOnPopUp()
                 .clickOnDocumentsOnThisDevice()
                 .swipUpUntilYouFindEmptyDoc()
-                .chooseEmptyDocFromThePhone()
+                .chooseTestDocFromPhoneStorage()
                 .clickDone();
     }
 
@@ -161,7 +196,8 @@ public class SignStepDefinitions {
         new MessageScreen()
                 .enterAgreementName()
                 .enterAgreementMessage()
-                .clickOnDone();
+                .clickDone();
+
     }
 
     @And("^Click on send button$")
@@ -233,6 +269,9 @@ public class SignStepDefinitions {
                 .clickOnSearchbuttonAndEnterAgreementName()
                 .clickOnAgreementOnWaitingForYouPage();
     }
+
+
+
 
     @And("^Select agreement you want to Approve and click on it$")
     public void findAgreementToApproveAndClickOnIt() throws FileNotFoundException {
@@ -342,6 +381,13 @@ public class SignStepDefinitions {
         new WaitingForOthersScreen().clickOnSpecificUser(users.getUser(arg0));
     }
 
+    @And("^Verify that sign/delegate/approve buttons are not present$")
+    public void verifyThatSignDelegateApproveButtonsAreNotPresent() throws FileNotFoundException {
+        new WaitingForOthersScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen();
+        new WaitingForYouScreen().clickOnSearchbuttonAndEnterAgreementName();
+        new WaitingForOthersScreen().verifyThatSignButtonIsNotPresent();
+    }
 
 
 

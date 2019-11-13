@@ -30,7 +30,7 @@ public class RecipientsOnGSIPScreen extends RecipientsScreen {
 
 
 
-    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.ScrollView/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[3]/android.widget.EditText")
+    @AndroidFindBy(xpath = "//android.widget.LinearLayout[3]/android.widget.EditText")
     private MobileElement inPersonSignerField;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/add_recipient\")")
@@ -45,6 +45,7 @@ public class RecipientsOnGSIPScreen extends RecipientsScreen {
             ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.ENTER));
             return this;
         } catch (WebDriverException e) {
+            e.printStackTrace();
             throw new AssertionError("Cannot type the address of In Person Signer");
         }
     }
