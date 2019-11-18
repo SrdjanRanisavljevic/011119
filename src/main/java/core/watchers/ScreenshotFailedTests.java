@@ -1,6 +1,6 @@
 package core.watchers;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import cucumber.api.Scenario;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;

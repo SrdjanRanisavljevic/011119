@@ -1,8 +1,7 @@
 package core.classic.methods;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.watchers.MyLogger;
-import gherkin.lexer.Fi;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
@@ -14,7 +13,6 @@ import org.openqa.selenium.interactions.touch.TouchActions;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Driver;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;

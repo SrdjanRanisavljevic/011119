@@ -1,7 +1,7 @@
 Feature: AndroidSanity
 
 Background: Set the environment
-Given User set the environent
+Given User sets the environment
 
 
   @reggression @stage @multishard @android

@@ -1,6 +1,6 @@
 package core.classic.methods;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.watchers.MyLogger;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;

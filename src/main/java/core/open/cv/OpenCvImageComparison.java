@@ -1,6 +1,6 @@
 package core.open.cv;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.image.helper.Screenshot;
 import core.watchers.MyLogger;
 import io.appium.java_client.imagecomparison.*;

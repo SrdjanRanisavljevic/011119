@@ -1,14 +1,14 @@
 package core.cucumberhooks;
 
-import api.drivers.Drivers;
-import api.sign.completedScreen.CompletedScreen;
-import api.sign.loginScreen.SignLoginScreen;
-import api.sign.sendForSignatureScreen.DelegateThisDocumentScreen;
-import api.sign.sendForSignatureScreen.MessageScreen;
-import api.sign.sendForSignatureScreen.PostSignScreen;
-import api.sign.sendForSignatureScreen.SignScreen;
-import api.sign.settingsScreen.SettingsScreen;
-import api.sign.waitingForYouScreen.WaitingForYouScreen;
+import pages.drivers.Drivers;
+import pages.sign.completedScreen.CompletedScreen;
+import pages.sign.loginScreen.SignLoginScreen;
+import pages.sign.sendForSignatureScreen.DelegateThisDocumentScreen;
+import pages.sign.sendForSignatureScreen.MessageScreen;
+import pages.sign.sendForSignatureScreen.PostSignScreen;
+import pages.sign.sendForSignatureScreen.SignScreen;
+import pages.sign.settingsScreen.SettingsScreen;
+import pages.sign.waitingForYouScreen.WaitingForYouScreen;
 import core.helpers.ADB;
 import core.helpers.MacTerminalCmd;
 import core.helpers.WebHelpers;

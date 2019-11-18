@@ -1,18 +1,17 @@
 package cucumber.cucumberTests;
 
-import api.sign.completedScreen.CompletedScreen;
-import api.sign.getSignatureInPersonScreen.GetSignatureInPersonScreen;
-import api.sign.getSignatureInPersonScreen.RecipientsOnGSIPScreen;
-import api.sign.homeScreen.HomeScreen;
-import api.sign.launcherScreen.SignLauncherScreen;
-import api.sign.loginScreen.SignLoginScreen;
-import api.sign.loginScreen.Users;
-import api.sign.sendForSignatureScreen.*;
-import api.sign.settingsScreen.SettingsScreen;
-import api.sign.waitingForOthersScreen.WaitingForOthersScreen;
-import api.sign.waitingForYouScreen.WaitingForYouScreen;
+import pages.sign.completedScreen.CompletedScreen;
+import pages.sign.getSignatureInPersonScreen.GetSignatureInPersonScreen;
+import pages.sign.getSignatureInPersonScreen.RecipientsOnGSIPScreen;
+import pages.sign.homeScreen.HomeScreen;
+import pages.sign.launcherScreen.SignLauncherScreen;
+import pages.sign.loginScreen.SignLoginScreen;
+import pages.sign.loginScreen.Users;
+import pages.sign.sendForSignatureScreen.*;
+import pages.sign.settingsScreen.SettingsScreen;
+import pages.sign.waitingForOthersScreen.WaitingForOthersScreen;
+import pages.sign.waitingForYouScreen.WaitingForYouScreen;
 import core.json.parsers.AppiumReadJsonResults;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -137,7 +136,7 @@ public class SignStepDefinitions {
         }
     }
 
-    @Given("^User set the environent$")
+    @Given("^User sets the environment$")
     public void setServer() throws FileNotFoundException {
         if(((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("production"))) {
             new SignLauncherScreen()
