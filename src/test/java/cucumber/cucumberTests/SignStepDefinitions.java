@@ -1,5 +1,6 @@
 package cucumber.cucumberTests;
 
+import cucumber.api.java.en.When;
 import pages.sign.completedScreen.CompletedScreen;
 import pages.sign.getSignatureInPersonScreen.GetSignatureInPersonScreen;
 import pages.sign.getSignatureInPersonScreen.RecipientsOnGSIPScreen;
@@ -29,6 +30,15 @@ public class SignStepDefinitions {
 
     @And("^Log in with user from \"([^\"]*)\"$")
     public void logIn(String arg0) throws FileNotFoundException, InterruptedException {
+        new SignLauncherScreen().dismissUpdateMessageIfPresent();
+        new SignLoginScreen()
+                .enterUserName(users.getUser(arg0))
+                .enterPassword()
+                .clickOnSignInButton();
+    }
+
+    @When("^User is logged in as sender from shard \"([^\"]*)\"$")
+    public void logInToCheckComplete(String arg0) throws FileNotFoundException, InterruptedException {
         new SignLauncherScreen().dismissUpdateMessageIfPresent();
         new SignLoginScreen()
                 .enterUserName(users.getUser(arg0))
@@ -225,6 +235,17 @@ public class SignStepDefinitions {
                 .clickOnSearchbuttonAndEnterAgreementName()
                 .verifyThatAgreementIsInCompletedSection();
     }
+
+    @Then("^Agreement should be in completed folder$")
+    public void thenAgreementIsInCompletedFolder() throws FileNotFoundException {
+        new HomeScreen().clickOnCompleted();
+        new CompletedScreen()
+                .waitingForCompletedScreenToLoad()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .verifyThatAgreementIsInCompletedSection();
+    }
+
+
 
     @And("^Click on waiting for others$")
     public void clickOnWaitingForOthers() throws FileNotFoundException {
