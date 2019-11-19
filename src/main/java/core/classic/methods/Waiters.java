@@ -76,7 +76,7 @@ public class Waiters {
     }
 
     public void waitForMobileElementToBeClickable(MobileElement element) {
-        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 180);
+        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 300);
         wait.ignoring(NoSuchElementException.class)
                 .pollingEvery(Duration.ofMillis(500))
                 .until(ExpectedConditions.elementToBeClickable(element));

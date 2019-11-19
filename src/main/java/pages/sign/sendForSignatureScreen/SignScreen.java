@@ -120,7 +120,7 @@ public class SignScreen {
         try {
             MyLogger.log.info("Click on apply button on edit signature screen");
             try{
-                Thread.sleep(3000);
+                waiters.sleep(4000);
             } catch (Exception e) {
                 MyLogger.log.info("Cannot sleep");
             }
@@ -172,7 +172,7 @@ public class SignScreen {
             if(deviceId.equals("ce041604406c423d01")) {
                 MyLogger.log.info("Clicking on FINISH button on sign editor using S7");
                 waiters.waitForElementVisibilityMobileElement(signatureField);
-                Thread.sleep(3000);
+                waiters.sleep(4000);
                 new TouchAction(Drivers.getMobileDriver()).press(PointOption.point(980, 330))
                         .release()
                         .perform();
@@ -180,7 +180,7 @@ public class SignScreen {
             }
             if (deviceId.equals("3204db2bb5fe7121")) {
                 MyLogger.log.info("Click on finish button on tablet");
-                Thread.sleep(3000);
+                waiters.sleep(4000);
                 waiters.waitForElementVisibilityMobileElement(finishOnTablet);
                 gestures.clickOnMobileElement(finishOnTablet);
                 return this;

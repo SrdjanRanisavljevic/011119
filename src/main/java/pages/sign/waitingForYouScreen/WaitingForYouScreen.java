@@ -171,9 +171,9 @@ public class WaitingForYouScreen {
 
     static int rnum = 5;
     public WaitingForYouScreen clickOnAgreementOnWaitingForYouPage() throws FileNotFoundException {
-        if (rnum < 0)
-            throw new AssertionError("MAXIMUM DEPT");
-        rnum--;
+//        if (rnum < 0)
+//            throw new AssertionError("MAXIMUM DEPT");
+//        rnum--;
         try {
             MyLogger.log.info("Trying to find the document;");
             AppiumDriver driver = Drivers.getMobileDriver();

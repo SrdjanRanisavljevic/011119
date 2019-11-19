@@ -138,7 +138,7 @@ public class SignStepDefinitions {
 
     @Given("^User sets the environment$")
     public void setServer() throws FileNotFoundException {
-        if(((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("production"))) {
+        if(((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("prod"))) {
             new SignLauncherScreen()
                     .dismissUpdateMessageIfPresent()
                     .clickRightArrowButtonToGetToSignInButton()
@@ -268,6 +268,38 @@ public class SignStepDefinitions {
                 .clickOnSearchbuttonAndEnterAgreementName()
                 .clickOnAgreementOnWaitingForYouPage();
     }
+
+    @And("^Log in with user from \"([^\"]*)\" and sign, then log out$")
+    public void logInAndSign(String arg0) throws FileNotFoundException, InterruptedException {
+        new SignLauncherScreen().dismissUpdateMessageIfPresent();
+        new SignLoginScreen()
+                .enterUserName(users.getUser(arg0))
+                .enterPassword()
+                .clickOnSignInButton();
+        new HomeScreen().clickOnWaitingForYou();
+        new WaitingForYouScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .clickOnAgreementOnWaitingForYouPage();
+        new SignScreen()
+                .clickOnStartButton()
+                .clickOnSignatureField()
+//              .clickSecondTimeOnSignatureFieldtoEdit()
+//               .writeTheNameOfSigner()
+                .clickOnKeyboardIcon()
+                .clickOnApplyButtonOnEditSignatureScreen()
+                .clickOnFinishButton()
+                .clickOnTapToSign();
+        new WaitingForYouScreen()
+                .waitingForWFYScrenToLoadAfterSigning()
+                .clickBackButton();
+        new HomeScreen()
+                .clickOnSettingsButton();
+        new SettingsScreen()
+                .clickOnSignOut()
+                .clickYesOrOk();
+    }
+
 
 
 

@@ -1,12 +1,12 @@
 Feature: SignLogin
 
-#Background:
-#Given User is in Launcher Screen
+  Background: Set the environment
+    Given User sets the environment
+
 
 #1
 @regression @stage @multishard
 Scenario: DCES-4199633 [Android] Shard EU1: Send for Signature : Parallel Delegate Approval
-  Given The environment is set to: "stage"
   And Log in with user from "EU1"
   And Click on send for signature
   And Select document from phone storage
@@ -80,7 +80,6 @@ Scenario: DCES-4199633 [Android] Shard EU1: Send for Signature : Parallel Delega
 #2
 @regression @stage @multishard
 Scenario: DCES-4199634 [Android] Shard EU2: Send for Signature : Sequential Delegate Signing
-  Given The environment is set to: "stage"
   And Log in with user from "EU2"
   And Click on send for signature
   And Select document from phone storage
@@ -153,7 +152,6 @@ Scenario: DCES-4199634 [Android] Shard EU2: Send for Signature : Sequential Dele
 #3
 @reggression @stage @multishard
 Scenario: DCES-4199635 [Android] Shard IN1: Send for Signature : Parallel signing
-  Given The environment is set to: "stage"
   And Log in with user from "IN1"
   And Click on send for signature
   And Select document from phone storage
@@ -174,53 +172,13 @@ Scenario: DCES-4199635 [Android] Shard IN1: Send for Signature : Parallel signin
   And Sign the agreement when agreement automatically loads for signing in paralel workflow
   And Sign out - from home screen
 
-  And Log in with user from "NA1"
-  And Click on waiting for you
-  And Select agreement you want to sign and click on it
-  And Sign the agreement
-  And Sign out - from home screen
-
-  And Log in with user from "NA3"
-  And Click on waiting for you
-  And Select agreement you want to sign and click on it
-  And Sign the agreement
-  And Sign out - from home screen
-
-  And Log in with user from "AU1"
-  And Click on waiting for you
-  And Select agreement you want to sign and click on it
-  And Sign the agreement
-  And Sign out - from home screen
-
-  And Log in with user from "EU2"
-  And Click on waiting for you
-  And Select agreement you want to sign and click on it
-  And Sign the agreement
-  And Sign out - from home screen
-
-  And Log in with user from "EU1"
-  And Click on waiting for you
-  And Select agreement you want to sign and click on it
-  And Sign the agreement
-  And Sign out - from home screen
-
-  And Log in with user from "IN1B"
-  And Click on waiting for you
-  And Select agreement you want to sign and click on it
-  And Sign the agreement
-  And Sign out - from home screen
-
-  And Log in with user from "NA2"
-  And Click on waiting for you
-  And Select agreement you want to sign and click on it
-  And Sign the agreement
-  And Sign out - from home screen
-
-  And Log in with user from "JP1"
-  And Click on waiting for you
-  And Select agreement you want to sign and click on it
-  And Sign the agreement
-  And Sign out - from home screen
+  And Log in with user from "NA1" and sign, then log out
+  And Log in with user from "AU1" and sign, then log out
+  And Log in with user from "EU2" and sign, then log out
+  And Log in with user from "EU1" and sign, then log out
+  And Log in with user from "IN1B" and sign, then log out
+  And Log in with user from "NA2" and sign, then log out
+  And Log in with user from "JP1" and sign, then log out
 
   And Log in with user from "IN1"
   Then Click on Completed and verify that the document is in completed folder
@@ -229,7 +187,6 @@ Scenario: DCES-4199635 [Android] Shard IN1: Send for Signature : Parallel signin
 #4
 @reggression @stage @multishard
 Scenario: DCES-4199636 [Android] Shard AU1: Send for Signature : Sequential Signing
-    Given The environment is set to: "stage"
     And Log in with user from "AU1"
     And Click on send for signature
     And Select document from phone storage
@@ -248,60 +205,16 @@ Scenario: DCES-4199636 [Android] Shard AU1: Send for Signature : Sequential Sign
     And Click on send button
     And Sign out - from home screen
 
-    And Log in with user from "NA1"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-
-    And Log in with user from "EU2"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-
-    And Log in with user from "EU1"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-
-    And Log in with user from "AU1B"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-
-    And Log in with user from "JP1"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-
-    And Log in with user from "NA2"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-
-    And Log in with user from "IN1"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-
-    And Log in with user from "NA3"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-
-    And Log in with user from "AU1"
-    And Click on waiting for you
-    And Select agreement you want to sign and click on it
-    And Sign the agreement
-    And Sign out - from home screen
-#log out  and log in with AU1 was performed because it takes server tu update completed section
+    And Log in with user from "NA1" and sign, then log out
+    And Log in with user from "EU2" and sign, then log out
+    And Log in with user from "EU1" and sign, then log out
+    And Log in with user from "AU1B" and sign, then log out
+    And Log in with user from "JP1" and sign, then log out
+    And Log in with user from "NA2" and sign, then log out
+    And Log in with user from "IN1" and sign, then log out
+    And Log in with user from "NA3" and sign, then log out
+    And Log in with user from "AU1" and sign, then log out
+    #log out  and log in with AU1 was performed because it takes server tu update completed section
     And Log in with user from "AU1"
     Then Click on Completed and verify that the document is in completed folder
 
@@ -309,7 +222,6 @@ Scenario: DCES-4199636 [Android] Shard AU1: Send for Signature : Sequential Sign
 #5
   @reggression @stage @multishard @NA1
   Scenario:DCES-4199637 [Android] Shard NA1: In person : Parallel approver
-    Given The environment is set to: "stage"
     And Log in with user from "NA1"
     And Click on get signature in person
     And Select document from phone storage
@@ -366,7 +278,6 @@ Scenario: DCES-4199636 [Android] Shard AU1: Send for Signature : Sequential Sign
 #6
   @reggression @stage @multishard @JP1
   Scenario: DCES-4199638 [Android] Shard JP1: In Person Signing : Sequential Approval
-    Given The environment is set to: "stage"
     And Log in with user from "JP1"
     And Click on get signature in person
     And Select document from phone storage
@@ -448,7 +359,6 @@ Scenario: DCES-4199636 [Android] Shard AU1: Send for Signature : Sequential Sign
 #7
   @reggression @stage @multishard @NA3
   Scenario: DCES-4212956 [Android] Shard NA3: Send for Signature : Sequential Signing
-  Given The environment is set to: "stage"
   And Log in with user from "NA3"
   And Click on send for signature
   And Select document from phone storage
@@ -527,7 +437,6 @@ Scenario: DCES-4199636 [Android] Shard AU1: Send for Signature : Sequential Sign
 #7
   @reggression @stage @multishard @JP1
   Scenario: DCES-4199638 [Android] Shard JP1: In Person Signing : Sequential Approval
-    Given The environment is set to: "stage"
     And Log in with user from "JP1"
     And Click on get signature in person
     And Select document from phone storage
