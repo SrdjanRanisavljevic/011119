@@ -14,10 +14,11 @@ Feature: Sign Basic Test
     And Enter recipient from shard: "JP1"
     And Click on done on Recipients Page
     And Click on send button
+    And Sign out - from home screen
     And Log in with user from "JP1" and sign, then log out
     
     When User is logged in as sender from shard "EU1"
     Then Agreement should be in completed folder
 
-    
+
     

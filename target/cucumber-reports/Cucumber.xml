@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="348.501434">
+<testcase classname="Sign Basic Test" name="DCMEA-000000 - Login, Send &amp; Sign" time="348.501434">
+<system-out><![CDATA[Given User sets the environment.............................................passed
+And Log in with user from "EU1".............................................passed
+And Click on send for signature.............................................passed
+And Select document from phone storage......................................passed
+And Enter agreement name and message........................................passed
+And Click on recipients button on send page.................................passed
+And Enter recipient from shard: "JP1".......................................passed
+And Click on done on Recipients Page........................................passed
+And Click on send button....................................................passed
+And Log in with user from "JP1" and sign, then log out......................passed
+When User is logged in as sender from shard "EU1"...........................passed
+Then Agreement should be in completed folder................................passed
+]]></system-out>
+</testcase>
+</testsuite>
