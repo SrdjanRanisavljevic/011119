@@ -76,7 +76,7 @@ public class SignStepDefinitions {
 
     }
 
-    @And("^Enter additional signer from shard: \"([^\"]*)\"$")
+    @And("^Enter additional recipient from shard: \"([^\"]*)\"$")
     public void enterAdditionalSignerFromShard(String arg0) throws FileNotFoundException {
         new RecipientsOnGSIPScreen()
                 .swipeToFindAddMeAndRecipientNameField();
@@ -321,6 +321,26 @@ public class SignStepDefinitions {
                 .clickYesOrOk();
     }
 
+    @And("^Log in with user from \"([^\"]*)\" and approve, then log out$")
+    public void logInAndApprove(String arg0) throws FileNotFoundException, InterruptedException {
+        new SignLauncherScreen().dismissUpdateMessageIfPresent();
+        new SignLoginScreen()
+                .enterUserName(users.getUser(arg0))
+                .enterPassword()
+                .clickOnSignInButton();
+        new HomeScreen().clickOnWaitingForYou();
+        new WaitingForYouScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .clickOnAgreementOnWaitingForYouPage();
+        new ApprovalScreen().approveAgreement();
+        new HomeScreen()
+                .clickOnSettingsButton();
+        new SettingsScreen()
+                .clickOnSignOut()
+                .clickYesOrOk();
+    }
+
 
 
 
@@ -391,9 +411,18 @@ public class SignStepDefinitions {
                 .clickOnOKProceedOnDialog();
         new ApprovalScreen()
                 .approveAgreementInPersonFlow();
-            // used when user external
-            // .enterYourInformationInPersonFlow();
+        // used when user external
+        // .enterYourInformationInPersonFlow();
     }
+
+    @And("^Approve the agreement as Sender in parallel approval flow$")
+    public void approveAgreementAsSender() throws FileNotFoundException {
+        new ApprovalScreen()
+                .approveAgreementInPersonFlow();
+        // used when user external
+        // .enterYourInformationInPersonFlow();
+    }
+
 
 
 
