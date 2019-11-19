@@ -5,7 +5,7 @@ public class AppiumReadJsonResults {
     /**
      * Desired Capabilities
      */
-    private String DeviceID;
+    public  String DeviceID;
     private String platformVersion;
     private String DeviceName;
     private String appLocation;
@@ -20,6 +20,7 @@ public class AppiumReadJsonResults {
     private String name;
     private String prefixEmail;
     private String unregisteredEmail;
+    private String environment;
 
     /**
      * Server/App Capabilities - Android
@@ -60,7 +61,7 @@ public class AppiumReadJsonResults {
      * User Data - accounts/passwords
      */
     private String usermail;
-    private String userpassword;
+    private String userPassword;
     private String newpassword;
 
     /**
@@ -268,12 +269,12 @@ public class AppiumReadJsonResults {
         this.usermail = usermail;
     }
 
-    public String getUserpassword() {
-        return userpassword;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setUserpassword(String userpassword) {
-        this.userpassword = userpassword;
+    public void setUserPassword(String userpassword) {
+        this.userPassword = userPassword;
     }
 
     public String getNewpassword() {
@@ -418,5 +419,13 @@ public class AppiumReadJsonResults {
 
     public String getUnregisteredEmail() {
         return unregisteredEmail;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    public String getEnvironment() {
+        return environment;
     }
 }

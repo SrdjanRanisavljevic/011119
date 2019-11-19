@@ -1,6 +1,6 @@
 package core.image.helper;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.helpers.Coordinates;
 import core.watchers.MyLogger;
 import io.appium.java_client.TouchAction;

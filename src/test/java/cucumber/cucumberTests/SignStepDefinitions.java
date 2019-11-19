@@ -1,372 +1,450 @@
 package cucumber.cucumberTests;
 
-import api.sign.home.screen.HomeScreenView;
-import api.sign.launcher.SignLauncherView;
-import api.sign.login.Screen.SignLoginView;
-import api.sign.send.screen.MessageScreen;
-import api.sign.send.screen.SendScreenView;
-import api.sign.send.screen.DocumentsScreen;
-import api.sign.send.screen.RecipientsScreen;
-import api.sign.settings.screen.SettingsView;
+import cucumber.api.java.en.When;
+import pages.sign.completedScreen.CompletedScreen;
+import pages.sign.getSignatureInPersonScreen.GetSignatureInPersonScreen;
+import pages.sign.getSignatureInPersonScreen.RecipientsOnGSIPScreen;
+import pages.sign.homeScreen.HomeScreen;
+import pages.sign.launcherScreen.SignLauncherScreen;
+import pages.sign.loginScreen.SignLoginScreen;
+import pages.sign.loginScreen.Users;
+import pages.sign.sendForSignatureScreen.*;
+import pages.sign.settingsScreen.SettingsScreen;
+import pages.sign.waitingForOthersScreen.WaitingForOthersScreen;
+import pages.sign.waitingForYouScreen.WaitingForYouScreen;
+import core.json.parsers.AppiumReadJsonResults;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-
+import cucumber.api.java.en.Then;
 import java.io.FileNotFoundException;
+
+import static core.json.parsers.ConfigJasonFileReading.getAndroidJasonResults;
 
 public class SignStepDefinitions {
 
+    private Users users = new Users();
+    AppiumReadJsonResults appiumReadJsonResults = new AppiumReadJsonResults();
 
-  // D I F F E R E N T      S H A R D S
-
-
-    @And ("^User signs with NA1 user")
-    public void enterNa1UserName () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.na1UserName);
-    }
+    // L O G       I N       W I T H       D I F F E R E N T      S H A R D S
 
 
-    @And ("^User signs with NA1 user B")
-    public void enterNa1UserNameB () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.na1UserNameB);
-    }
-
-    // NA 2
-
-    @And ("^User signs with NA2 user")
-    public void enterNa2UserName () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.na2UserName);
-    }
-
-    @And ("^User signs with NA2 user B")
-    public void enterNa2UserNameB () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.na2UserNameB);
-    }
-
-    // NA 3
-
-    @And ("^User signs with NA3 user")
-    public void enterNa3UserName () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.na3UserName);
-    }
-
-    @And ("^User signs with NA3 user B")
-    public void enterNa3UserNameB () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.na3UserNameB);
-    }
-
-
-    // E U 1
-
-    @And ("^User signs with EU1 user")
-    public void enterEu1UserName () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.eu1UserName)
+    @And("^Log in with user from \"([^\"]*)\"$")
+    public void logIn(String arg0) throws FileNotFoundException, InterruptedException {
+        new SignLauncherScreen().dismissUpdateMessageIfPresent();
+        new SignLoginScreen()
+                .enterUserName(users.getUser(arg0))
                 .enterPassword()
                 .clickOnSignInButton();
-
     }
 
-    @And ("^User signs with EU1 user B")
-    public void enteraEu1UserNameB () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.eu1UserNameB);
-    }
-
-// EU 2
-
-    @And ("^User signs with EU2 user")
-    public void enterEu2UserName () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.eu2UserName);
-    }
-
-    @And ("^User signs with EU2 user B")
-    public void enterEu2UserNameB () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.eu2UserNameB);
-    }
-
-// JP 1     AU 1     IN 1
-
-
-    @And ("^User signs with JP1 user")
-    public void enterJp1UserName () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.jp1UserName);
-    }
-
-    @And ("^User signs with AU1 user")
-    public void enteraAu1UserName () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.au1UserName);
-    }
-
-    @And ("^User signs with IN1 user")
-    public void enteraIn1UserName () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView.enterUserName(signLoginView.in1UserName);
+    @When("^User is logged in as sender from shard \"([^\"]*)\"$")
+    public void logInToCheckComplete(String arg0) throws FileNotFoundException, InterruptedException {
+        new SignLauncherScreen().dismissUpdateMessageIfPresent();
+        new SignLoginScreen()
+                .enterUserName(users.getUser(arg0))
+                .enterPassword()
+                .clickOnSignInButton();
     }
 
 
-  // ENTERING RECIPIENTS ON SEND FOR SIGNATURE
+    // R   E   C   I   P   I   E   N   T   S
 
-    @And ("^Click on recipients button on send page")
-    public void clickOnRecipientsButtonOnSednPage () throws FileNotFoundException {
-        SendScreenView sendScreenView = new SendScreenView();
-        sendScreenView.clickOnRecipientsButton();
+
+    @And("^Click on Add Me button$")
+    public void clickOnAddMeButton() throws FileNotFoundException {
+        new RecipientsScreen()
+                .swipeToFindAddMeAndRecipientNameField()
+                .clickOnAddMeButton();
     }
 
-    @And ("^Enter recipient from NA1")
-    public void enterRecipientFromNa1 () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        RecipientsScreen recipientsScreen = new RecipientsScreen();
-        recipientsScreen.addRecipient(signLoginView.na1UserName);
+    @And("^Click on recipients button on send page$")
+    public void clickOnRecipientsButtonOnSednPage() throws FileNotFoundException {
+        new SendForSignatureScreen().clickOnRecipientsButton();
     }
 
-    @And ("^Enter recipient from NA2")
-    public void enterRecipientFromNa2 () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        RecipientsScreen recipientsScreen = new RecipientsScreen();
-        recipientsScreen.addRecipient(signLoginView.na2UserName);
+    @And("^Enter recipient from shard: \"([^\"]*)\"$")
+    public void enterRecipientFromShared(String arg0) throws FileNotFoundException {
+        new RecipientsScreen()
+                .swipeToFindAddMeAndRecipientNameField()
+                .addRecipient(users.getUser(arg0));
     }
 
-    @And ("^Enter recipient from EU1")
-    public void enterRecipientFromEu1 () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        RecipientsScreen recipientsScreen = new RecipientsScreen();
-        recipientsScreen.addRecipient(signLoginView.eu1UserName);
+    @And("^Enter in person signer from shard: \"([^\"]*)\"$")
+    public void enterInPersonSignerFromShard(String arg0) throws FileNotFoundException {
+        new RecipientsOnGSIPScreen()
+                .addInPersonSigner(users.getUser(arg0));
+
     }
 
-    @And ("^Enter recipient from IN1")
-    public void enterRecipientFromIn1 () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        RecipientsScreen recipientsScreen = new RecipientsScreen();
-        recipientsScreen.addRecipient(signLoginView.in1UserName);
+    @And("^Enter additional signer from shard: \"([^\"]*)\"$")
+    public void enterAdditionalSignerFromShard(String arg0) throws FileNotFoundException {
+        new RecipientsOnGSIPScreen()
+                .swipeToFindAddMeAndRecipientNameField();
+        new RecipientsOnGSIPScreen()
+                .addAdditionalSigner(users.getUser(arg0));
+
     }
 
-    @And ("^Enter recipient from JP1")
-    public void enterRecipientFromJp1 () throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        RecipientsScreen recipientsScreen = new RecipientsScreen();
-        recipientsScreen.addRecipient(signLoginView.jp1UserName);
-    }
 
 
     // R   O   L   E   S                  R   O   L   E   S
 
-    @And ("^Assign delegator to approver role to the recipient from shard: \"([^\"]*)\"$")
-    public void assignDelegatorToApproverRole (String arg0) throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        RecipientsScreen recipientsScreen = new RecipientsScreen();
-        switch (arg0) {
-            case "NA1": recipientsScreen.setDelegatorToApprover(signLoginView.na1UserName);
-                break;
-            case "NA1B": recipientsScreen.setDelegatorToApprover(signLoginView.na1UserNameB);
-                break;
-            case "NA2": recipientsScreen.setDelegatorToApprover(signLoginView.na2UserName);
-                break;
-            case "NA2B": recipientsScreen.setDelegatorToApprover(signLoginView.na2UserNameB);
-                break;
-            case "NA3": recipientsScreen.setDelegatorToApprover(signLoginView.na3UserName);
-                break;
-            case "NA3B": recipientsScreen.setDelegatorToApprover(signLoginView.na3UserNameB);
-                break;
-            case "EU1": recipientsScreen.setDelegatorToApprover(signLoginView.eu1UserName);
-                break;
-            case "EU1B": recipientsScreen.setDelegatorToApprover(signLoginView.na1UserNameB);
-                break;
-            case "EU2": recipientsScreen.setDelegatorToApprover(signLoginView.eu2UserName);
-                break;
-            case "EU2B": recipientsScreen.setDelegatorToApprover(signLoginView.eu2UserNameB);
-                break;
-            case "JP1": recipientsScreen.setDelegatorToApprover(signLoginView.jp1UserName);
-                break;
-            case "AU1": recipientsScreen.setDelegatorToApprover(signLoginView.au1UserName);
-                break;
-            case "IN1": recipientsScreen.setDelegatorToApprover(signLoginView.in1UserName);
-                break;
-        }
+    @And("^Assign delegator to approver role to the recipient from shard: \"([^\"]*)\"$")
+    public void assignDelegatorToApproverRole(String arg0) throws FileNotFoundException {
+        new RecipientsScreen().setDelegatorToApprover(users.getUser(arg0));
     }
 
-    @And ("^Assign delegator to signer role to the recipient from shard: \"([^\"]*)\"$")
+
+    @And("^Assign delegator to signer role to the recipient from shard: \"([^\"]*)\"$")
     public void assignDelegatorToSignerRole(String arg0) throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        RecipientsScreen recipientsScreen = new RecipientsScreen();
-        switch (arg0) {
-            case "NA1": recipientsScreen.setDelegatorToSigner(signLoginView.na1UserName);
-                break;
-            case "NA1B": recipientsScreen.setDelegatorToSigner(signLoginView.na1UserNameB);
-                break;
-            case "NA2": recipientsScreen.setDelegatorToSigner(signLoginView.na2UserName);
-                break;
-            case "NA2B": recipientsScreen.setDelegatorToSigner(signLoginView.na2UserNameB);
-                break;
-            case "NA3": recipientsScreen.setDelegatorToSigner(signLoginView.na3UserName);
-                break;
-            case "NA3B": recipientsScreen.setDelegatorToSigner(signLoginView.na3UserNameB);
-                break;
-            case "EU1": recipientsScreen.setDelegatorToSigner(signLoginView.eu1UserName);
-                break;
-            case "EU1B": recipientsScreen.setDelegatorToSigner(signLoginView.eu1UserNameB);
-                break;
-            case "EU2": recipientsScreen.setDelegatorToSigner(signLoginView.eu2UserName);
-                break;
-            case "EU2B": recipientsScreen.setDelegatorToSigner(signLoginView.eu2UserNameB);
-                break;
-            case "JP1": recipientsScreen.setDelegatorToSigner(signLoginView.jp1UserName);
-                break;
-            case "AU1": recipientsScreen.setDelegatorToSigner(signLoginView.au1UserName);
-                break;
-            case "IN1": recipientsScreen.setDelegatorToSigner(signLoginView.in1UserName);
-                break;
+        new RecipientsScreen().setDelegatorToSigner(users.getUser(arg0));
+    }
+
+
+    @And("^Assign Approver role to the recipient from shard: \"([^\"]*)\"$")
+    public void assignApproverRoleToRecipient(String arg0) throws FileNotFoundException {
+        new RecipientsScreen().setRoleToApprover(users.getUser(arg0));
+    }
+
+
+    @And("^Click on done on Recipients Page$")
+    public void clickDoneOnRecipientsPage() throws FileNotFoundException {
+        new RecipientsScreen().clickDone();
+    }
+
+
+
+    //     S  E  T         E  N  V  I  R  O  N  M  E  N  T
+
+    @Given("^The environment is set to: \"([^\"]*)\"$")
+    public void setServer(String arg0) throws FileNotFoundException {
+        if(arg0.equalsIgnoreCase("production")) {
+            new SignLauncherScreen()
+                    .dismissUpdateMessageIfPresent()
+                    .clickRightArrowButtonToGetToSignInButton()
+                    .clickOnLoginButton();
+        } else {
+            new SignLauncherScreen()
+                    .clickRightArrowButtonToGetToSignInButton()
+                    .clickOnLoginButton();
+            new SignLoginScreen()
+                    .enterUserName(users.getProdUser())
+                    .enterPassword()
+                    .clickOnSignInButton();
+            new HomeScreen()
+                    .clickOnSettingsButton();
+            new SettingsScreen()
+                    .clickOnAboutButton()
+                    .clickOnVersionButton()
+                    .clickYesOrOk();
+            if (arg0.equalsIgnoreCase("stage")) {
+                new SettingsScreen().chooseStageServer().clickYesOrOk();
+            }
+            if (arg0.equalsIgnoreCase("preview")) {
+                new SettingsScreen().clickYesOrOk();
+            }
         }
     }
 
-    @And ("^Assign Approver role to the recipient from shard: \"([^\"]*)\"$")
-    public void assignApproverRoleToRecipient (String arg0) throws FileNotFoundException {
-        SignLoginView signLoginView = new SignLoginView();
-        RecipientsScreen recipientsScreen = new RecipientsScreen();
-        switch (arg0) {
-            case "NA1": recipientsScreen.setRoleToApprover(signLoginView.na1UserName);
-                break;
-            case "NA1B": recipientsScreen.setRoleToApprover(signLoginView.na1UserNameB);
-                break;
-            case "NA2": recipientsScreen.setRoleToApprover(signLoginView.na2UserName);
-                break;
-            case "NA2B": recipientsScreen.setRoleToApprover(signLoginView.na2UserNameB);
-                break;
-            case "NA3": recipientsScreen.setRoleToApprover(signLoginView.na3UserName);
-                break;
-            case "NA3B": recipientsScreen.setRoleToApprover(signLoginView.na3UserNameB);
-                break;
-            case "EU1": recipientsScreen.setRoleToApprover(signLoginView.eu1UserName);
-                break;
-            case "EU1B": recipientsScreen.setRoleToApprover(signLoginView.eu1UserNameB);
-                break;
-            case "EU2": recipientsScreen.setRoleToApprover(signLoginView.eu2UserName);
-                break;
-            case "EU2B": recipientsScreen.setRoleToApprover(signLoginView.eu2UserNameB);
-                break;
-            case "JP1": recipientsScreen.setRoleToApprover(signLoginView.jp1UserName);
-                break;
-            case "AU1": recipientsScreen.setRoleToApprover(signLoginView.au1UserName);
-                break;
-            case "IN1": recipientsScreen.setRoleToApprover(signLoginView.in1UserName);
-                break;
+    @Given("^User sets the environment$")
+    public void setServer() throws FileNotFoundException {
+        if(((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("prod"))) {
+            new SignLauncherScreen()
+                    .dismissUpdateMessageIfPresent()
+                    .clickRightArrowButtonToGetToSignInButton()
+                    .clickOnLoginButton();
+        } else {
+            new SignLauncherScreen()
+                    .clickRightArrowButtonToGetToSignInButton()
+                    .clickOnLoginButton();
+            new SignLoginScreen()
+                    .enterUserName(users.getProdUser())
+                    .enterPassword()
+                    .clickOnSignInButton();
+            new HomeScreen()
+                    .clickOnSettingsButton();
+            new SettingsScreen()
+                    .clickOnAboutButton()
+                    .clickOnVersionButton()
+                    .clickYesOrOk();
+            if (((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("stage"))) {
+                new SettingsScreen().chooseStageServer().clickYesOrOk();
+            }
+            if (((getAndroidJasonResults().getEnvironment()).equalsIgnoreCase("preview"))) {
+                new SettingsScreen().clickYesOrOk();
+            }
         }
     }
 
 
-    @And ("^Click on done on Recipients Page")
-    public void clickDoneOnRecipientsPage () throws FileNotFoundException {
+    // S  E  N  D      S   C   R   E   E   N       S   T   E   P   S
+
+    @And("^Turn off complete in order listed$")
+    public void turnOffCompleteInOrderListed() throws FileNotFoundException {
         RecipientsScreen recipientsScreen = new RecipientsScreen();
-        recipientsScreen.clickOnDone();
+        recipientsScreen.clickOnCompleteInOrderListed();
     }
 
 
-
-    // S  I  G  N         O   U   T
-
-    @And ("^Sign out - from home screen")
-    public void signOut () throws FileNotFoundException {
-        HomeScreenView homeScreenView = new HomeScreenView();
-        homeScreenView.clickOnSettingsButton();
-        SettingsView settingsView = new SettingsView();
-        settingsView.clickOnSignOut();
-    }
-
-
-
-
-
-    // CELI KOMADI TESTOVAA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    @Given("^Sign in with production user and change server to Stage")
-    public void changeServerToStage() throws FileNotFoundException {
-        SignLauncherView signLauncherView = new SignLauncherView();
-
-        signLauncherView
-                .swipeLeftThreeTimes()
-                .clickOnLoginButton();
-
-        SignLoginView signLoginView = new SignLoginView();
-        signLoginView
-                .enterUserName(signLoginView.prodUser)
-                .enterPassword()
-                .clickOnSignInButton();
-
-//        HomeScreenView homeScreenView = new HomeScreenView();
-//        homeScreenView.validateElementsfromHomeScreen()
-//                .clickOnSettingsButton();
-//
-//    SettingsView settingsView = new SettingsView();
-//        settingsView.clickOnAboutButton()
-//                .clickOnVersionButton()
-//                .clickYesOrOk()
-//                .chooseStageServer()
-//                .clickYesOrOk();
-
-}
-
-    @And ("^User selects document from phone storage")
-    public void userSelectDocument () throws FileNotFoundException {
-        HomeScreenView homeScreenView = new HomeScreenView();
-        homeScreenView.clickSendForSignature();
-
-        SendScreenView sendScreenView = new SendScreenView();
-        sendScreenView.clickOnDocumentsButton();
-        DocumentsScreen documentsScreen = new DocumentsScreen();
-        documentsScreen.clickOnAddDocumentButton()
-                .clickOnDocumentsOnThisDevice();
-
-//        Swipe.customSwipeDown();
-//        Swipe.customSwipeDown();
-
-               documentsScreen
-                .chooseEmptyDocFromThePhone()
+    @And("^Select document from phone storage$")
+    public void userSelectDocument() throws FileNotFoundException, InterruptedException {
+        new SendForSignatureScreen().clickOnDocumentsButton();
+        new DocumentsScreen()
+                .dismissScanDocumentsAndAttachPopUp()
+                .clickOnAddDocumentButton()
+                .clickOnAllowOnPopUp()
+                .clickOnDocumentsOnThisDevice()
+                .swipUpUntilYouFindEmptyDoc()
+                .chooseTestDocFromPhoneStorage()
                 .clickDone();
     }
 
-    @And ("^User enters agreement name and message")
-    public void userEntersAgrementNameAndMessage () throws FileNotFoundException {
-        MessageScreen messageScreen = new MessageScreen();
-        messageScreen.enterAgreementName()
+    @And("^Enter agreement name and message$")
+    public void userEntersAgrementNameAndMessage() throws FileNotFoundException {
+        new SendForSignatureScreen().clickOnMessageButton();
+        new MessageScreen()
+                .enterAgreementName()
                 .enterAgreementMessage()
-                .clickOnDone();
+                .clickDone();
+
     }
 
-    @And ("^User clicks on send button")
-    public void userClicksOnSendButton () throws FileNotFoundException {
-        SendScreenView sendScreenView = new SendScreenView();
-        sendScreenView.clickOnSendAgreementButton();
+    @And("^Click on send button$")
+    public void userClicksOnSendButton() throws FileNotFoundException {
+        new SendForSignatureScreen().clickOnSendAgreementButton();
     }
 
-    @And ("^User clicks on Message button on send page")
-    public void userClicksonMessageButtonOnSendPage () throws FileNotFoundException {
-        SendScreenView sendScreenView = new SendScreenView();
-        sendScreenView.clickOnMessageButton();
+    @And("^Click on send button on get signature in person$")
+    public void clickOnSendOnGetSignatureInPerson() throws FileNotFoundException {
+        new GetSignatureInPersonScreen().clickOnSendButtonOnGetSignatureInPerson();
     }
 
 
 //     H  O  M  E       S  C  R  E  E  N      S  T  E  P  S
 
-    @And ("^User clicks on waiting for you")
-    public void userClicksonWaitingForYou () throws FileNotFoundException {
-        HomeScreenView homeScreenView = new HomeScreenView();
-//        homeScreenView.clickOnWaitingForYou();
+    @And("^Click on waiting for you$")
+    public void userClicksonWaitingForYou() throws FileNotFoundException {
+        new HomeScreen().clickOnWaitingForYou();
+    }
+
+    @Then("^Click on Completed and verify that the document is in completed folder$")
+    public void verifyAgreementIsInCompleted() throws FileNotFoundException {
+        new HomeScreen().clickOnCompleted();
+        new CompletedScreen()
+                .waitingForCompletedScreenToLoad()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .verifyThatAgreementIsInCompletedSection();
+    }
+
+    @Then("^Agreement should be in completed folder$")
+    public void thenAgreementIsInCompletedFolder() throws FileNotFoundException {
+        new HomeScreen().clickOnCompleted();
+        new CompletedScreen()
+                .waitingForCompletedScreenToLoad()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .verifyThatAgreementIsInCompletedSection();
+    }
+
+
+
+    @And("^Click on waiting for others$")
+    public void clickOnWaitingForOthers() throws FileNotFoundException {
+        new HomeScreen().clickOnWaitingForOthers();
+    }
+
+    @And("^Click on send for signature$")
+    public void clickOnSendForSignature() throws FileNotFoundException {
+        new HomeScreen().clickSendForSignature();
+    }
+
+    @And("^Click on get signature in person$")
+    public void clickOnGetSignatureInPerson() throws FileNotFoundException {
+        new HomeScreen().clickOnGetSignatureInPerson();
+    }
+
+    @And("^Sign out - from home screen$")
+    public void signOut() throws FileNotFoundException {
+        new HomeScreen()
+                .clickOnSettingsButton();
+        new SettingsScreen()
+                .clickOnSignOut()
+                .clickYesOrOk();
+    }
+
+
+    // W  A  I  T  I  N  G        F  O  R         Y  O  U
+
+    @And("^Select agreement you want to delegate and click on it$")
+    public void findAgreementAndClickOnIt() throws FileNotFoundException {
+        new WaitingForYouScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .clickOnAgreementOnWaitingForYouPage();
+    }
+
+    @And("^Select agreement you want to sign and click on it$")
+    public void findAgreementToSignAndClickOnIt() throws FileNotFoundException {
+        new WaitingForYouScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .clickOnAgreementOnWaitingForYouPage();
+    }
+
+    @And("^Log in with user from \"([^\"]*)\" and sign, then log out$")
+    public void logInAndSign(String arg0) throws FileNotFoundException, InterruptedException {
+        new SignLauncherScreen().dismissUpdateMessageIfPresent();
+        new SignLoginScreen()
+                .enterUserName(users.getUser(arg0))
+                .enterPassword()
+                .clickOnSignInButton();
+        new HomeScreen().clickOnWaitingForYou();
+        new WaitingForYouScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .clickOnAgreementOnWaitingForYouPage();
+        new SignScreen()
+                .clickOnStartButton()
+                .clickOnSignatureField()
+//              .clickSecondTimeOnSignatureFieldtoEdit()
+//               .writeTheNameOfSigner()
+                .clickOnKeyboardIcon()
+                .clickOnApplyButtonOnEditSignatureScreen()
+                .clickOnFinishButton()
+                .clickOnTapToSign();
+        new WaitingForYouScreen()
+                .waitingForWFYScrenToLoadAfterSigning()
+                .clickBackButton();
+        new HomeScreen()
+                .clickOnSettingsButton();
+        new SettingsScreen()
+                .clickOnSignOut()
+                .clickYesOrOk();
     }
 
 
 
 
 
+    @And("^Select agreement you want to Approve and click on it$")
+    public void findAgreementToApproveAndClickOnIt() throws FileNotFoundException {
+        new WaitingForYouScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .clickOnAgreementOnWaitingForYouPage();
+    }
+
+    @And("^Click on Delegate button on agreements screen$")
+    public void clickOnDelegateButtonOnAgreementScreen() throws FileNotFoundException {
+        new AgreementSummaryScreen().clickOnSignButton();
+    }
+
+    @And("^Click on Approve button on agreements screen$")
+    public void clickOnApproveeButtonOnAgreementScreen() throws FileNotFoundException {
+        new ApprovalScreen().approveAgreement();
+    }
+
+    @And("^Sign the agreement$")
+    public void signTheAgreement() throws FileNotFoundException {
+        new SignScreen()
+                .clickOnStartButton()
+                .clickOnSignatureField()
+//              .clickSecondTimeOnSignatureFieldtoEdit()
+//               .writeTheNameOfSigner()
+                .clickOnKeyboardIcon()
+                .clickOnApplyButtonOnEditSignatureScreen()
+                .clickOnFinishButton()
+                .clickOnTapToSign();
+        new WaitingForYouScreen()
+                .waitingForWFYScrenToLoadAfterSigning()
+                .clickBackButton();
+    }
+
+    @And("^Sign the agreement when agreement automatically loads for signing in paralel workflow$")
+    public void signTheAgreementAutomaticLoadOfAgreement() throws FileNotFoundException {
+        new SignScreen()
+                .clickOnStartButton()
+                .clickOnSignatureField()
+                .clickOnKeyboardIcon()
+                .clickOnApplyButtonOnEditSignatureScreen()
+                .clickOnFinishButton()
+                .clickOnTapToSign();
+    }
+
+    @And("^Sign the agreement in in person signing flow$")
+    public void signTheAgreementInPersonFlow() throws FileNotFoundException {
+        new GetSignatureInPersonScreen()
+                .clickOnOKProceedOnDialog()
+                .clickOnOKProceedOnDialog();
+        new SignScreen()
+                .clickOnStartButton()
+                .clickOnSignatureField()
+                .clickOnKeyboardIcon()
+                .clickOnApplyButtonOnEditSignatureScreen()
+                .clickOnFinishButton()
+                .clickOnTapToSign();
+    }
+
+    @And("^Approve the agreement in in person signing flow$")
+    public void approveAgreementInPersonFlow() throws FileNotFoundException {
+        new GetSignatureInPersonScreen()
+                .clickOnOKProceedOnDialog()
+                .clickOnOKProceedOnDialog();
+        new ApprovalScreen()
+                .approveAgreementInPersonFlow();
+            // used when user external
+            // .enterYourInformationInPersonFlow();
+    }
+
+
+
+    @And("^Delegate agreement for approval to the recipient from shard: \"([^\"]*)\"$")
+    public void delegateAgreementForApproval(String arg0) throws FileNotFoundException {
+        new DelegateThisDocumentScreen()
+                .enterDelegateeMail(users.getUser(arg0))
+                .enterDelegateeMessage()
+                .clickOnDelegateButton();
+        new PostSignScreen()
+                .waitingForPostSignScreenToLoad()
+                .isActualPostDelegationMessageAsExpectedApproval(users.getUser(arg0))
+                .backToHomePage();
+    }
+
+
+    @And("^Delegate agreement for signing to the recipient from shard: \"([^\"]*)\"$")
+    public void delegateAgreementForSigning(String arg0) throws FileNotFoundException {
+        new DelegateThisDocumentScreen()
+                .enterDelegateeMail(users.getUser(arg0))
+                .enterDelegateeMessage()
+                .clickOnDelegateButton();
+        new PostSignScreen()
+                .waitingForPostSignScreenToLoad()
+                .isActualPostDelegationMessageAsExpectedSigning(users.getUser(arg0))
+                .backToHomePage();
+    }
+
+    // W  A  I  T  I  N  G     F  O  R     O  T  H  E  R  S
+    @And("^Click on back button on waiting for others screen$")
+    public void clickOnBackButtonOnWaitingForOthersScreen() throws FileNotFoundException {
+        new WaitingForOthersScreen().clickBackButton();
+    }
+
+    @And("^Select signer on WFO screen in paralel workflow - from shard :\"([^\"]*)\"$")
+    public void selectSignerFromShard (String arg0) throws FileNotFoundException {
+        new WaitingForOthersScreen().clickOnSpecificUser(users.getUser(arg0));
+    }
+
+    @And("^Verify that sign/delegate/approve buttons are not present$")
+    public void verifyThatSignDelegateApproveButtonsAreNotPresent() throws FileNotFoundException {
+        new WaitingForOthersScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen();
+        new WaitingForYouScreen().clickOnSearchbuttonAndEnterAgreementName();
+        new WaitingForOthersScreen().verifyThatSignButtonIsNotPresent();
+    }
 
 
 
 }
+
+
+
+

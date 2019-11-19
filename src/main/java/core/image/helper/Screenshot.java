@@ -1,6 +1,6 @@
 package core.image.helper;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.watchers.MyLogger;
 import org.junit.Assert;
 import org.openqa.selenium.OutputType;

@@ -1,69 +1,232 @@
-$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("src/test/java/cucumber/features/SignLogin.feature");
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("src/test/java/cucumber/features/SignBasicTest.feature");
 formatter.feature({
-  "line": 1,
-  "name": "SignLogin",
+  "line": 3,
+  "name": "Sign Basic Test",
   "description": "",
-  "id": "signlogin",
+  "id": "sign-basic-test",
   "keyword": "Feature"
 });
 formatter.before({
-  "duration": 83525400,
+  "duration": 270200,
   "status": "passed"
 });
 formatter.before({
-  "duration": 79500,
+  "duration": 45200,
   "status": "passed"
 });
 formatter.before({
-  "duration": 32200472700,
+  "duration": 50518219100,
   "status": "passed"
 });
 formatter.before({
-  "duration": 2538823100,
+  "duration": 5448105600,
   "status": "passed"
 });
 formatter.before({
-  "duration": 35400,
+  "duration": 36800,
+  "status": "passed"
+});
+formatter.before({
+  "duration": 5048100,
+  "status": "passed"
+});
+formatter.before({
+  "duration": 2482200,
+  "status": "passed"
+});
+formatter.before({
+  "duration": 257282900,
+  "status": "passed"
+});
+formatter.background({
+  "line": 5,
+  "name": "Set the environment",
+  "description": "",
+  "type": "background",
+  "keyword": "Background"
+});
+formatter.step({
+  "line": 6,
+  "name": "User sets the environment",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "SignStepDefinitions.setServer()"
+});
+formatter.result({
+  "duration": 12708922200,
   "status": "passed"
 });
 formatter.scenario({
-  "comments": [
-    {
-      "line": 3,
-      "value": "#Background:"
-    },
-    {
-      "line": 4,
-      "value": "#Given User is in Launcher Screen"
-    }
-  ],
-  "line": 7,
-  "name": "Sign Login Feature",
+  "line": 8,
+  "name": "DCMEA-000000 - Login, Send \u0026 Sign",
   "description": "",
-  "id": "signlogin;sign-login-feature",
+  "id": "sign-basic-test;dcmea-000000---login,-send-\u0026-sign",
   "type": "scenario",
   "keyword": "Scenario"
 });
 formatter.step({
-  "line": 8,
-  "name": "Sign in with production user and change server to Stage",
-  "keyword": "Given "
+  "line": 9,
+  "name": "Log in with user from \"EU1\"",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 10,
+  "name": "Click on send for signature",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 11,
+  "name": "Select document from phone storage",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 12,
+  "name": "Enter agreement name and message",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 13,
+  "name": "Click on recipients button on send page",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 14,
+  "name": "Enter recipient from shard: \"JP1\"",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 15,
+  "name": "Click on done on Recipients Page",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 16,
+  "name": "Click on send button",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 17,
+  "name": "Log in with user from \"JP1\" and sign, then log out",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 19,
+  "name": "User is logged in as sender from shard \"EU1\"",
+  "keyword": "When "
+});
+formatter.step({
+  "line": 20,
+  "name": "Agreement should be in completed folder",
+  "keyword": "Then "
 });
 formatter.match({
-  "location": "SignStepDefinitions.changeServerToStage()"
+  "arguments": [
+    {
+      "val": "EU1",
+      "offset": 23
+    }
+  ],
+  "location": "SignStepDefinitions.logIn(String)"
 });
 formatter.result({
-  "duration": 43717732100,
-  "error_message": "java.lang.AssertionError: Cannot click on Login button from Sign Launcher screen\r\n\tat api.sign.launcher.SignLauncherView.clickOnLoginButton(SignLauncherView.java:93)\r\n\tat cucumber.cucumberTests.SignStepDefinitions.changeServerToStage(SignStepDefinitions.java:296)\r\n\tat ✽.Given Sign in with production user and change server to Stage(src/test/java/cucumber/features/SignLogin.feature:8)\r\n",
-  "status": "failed"
+  "duration": 5600490300,
+  "status": "passed"
 });
-formatter.embedding("image/png", "embedded0.png");
-formatter.after({
-  "duration": 4572102700,
+formatter.match({
+  "location": "SignStepDefinitions.clickOnSendForSignature()"
+});
+formatter.result({
+  "duration": 19942408200,
+  "status": "passed"
+});
+formatter.match({
+  "location": "SignStepDefinitions.userSelectDocument()"
+});
+formatter.result({
+  "duration": 24929782200,
+  "status": "passed"
+});
+formatter.match({
+  "location": "SignStepDefinitions.userEntersAgrementNameAndMessage()"
+});
+formatter.result({
+  "duration": 10806320500,
+  "status": "passed"
+});
+formatter.match({
+  "location": "SignStepDefinitions.clickOnRecipientsButtonOnSednPage()"
+});
+formatter.result({
+  "duration": 2013170500,
+  "status": "passed"
+});
+formatter.match({
+  "arguments": [
+    {
+      "val": "JP1",
+      "offset": 29
+    }
+  ],
+  "location": "SignStepDefinitions.enterRecipientFromShared(String)"
+});
+formatter.result({
+  "duration": 2420059500,
+  "status": "passed"
+});
+formatter.match({
+  "location": "SignStepDefinitions.clickDoneOnRecipientsPage()"
+});
+formatter.result({
+  "duration": 2113511400,
+  "status": "passed"
+});
+formatter.match({
+  "location": "SignStepDefinitions.userClicksOnSendButton()"
+});
+formatter.result({
+  "duration": 1630936200,
+  "status": "passed"
+});
+formatter.match({
+  "arguments": [
+    {
+      "val": "JP1",
+      "offset": 23
+    }
+  ],
+  "location": "SignStepDefinitions.logInAndSign(String)"
+});
+formatter.result({
+  "duration": 167521535000,
+  "status": "passed"
+});
+formatter.match({
+  "arguments": [
+    {
+      "val": "EU1",
+      "offset": 40
+    }
+  ],
+  "location": "SignStepDefinitions.logInToCheckComplete(String)"
+});
+formatter.result({
+  "duration": 9172013100,
+  "status": "passed"
+});
+formatter.match({
+  "location": "SignStepDefinitions.thenAgreementIsInCompletedFolder()"
+});
+formatter.result({
+  "duration": 29131651700,
   "status": "passed"
 });
 formatter.after({
-  "duration": 31300,
+  "duration": 4279102400,
+  "status": "passed"
+});
+formatter.after({
+  "duration": 40200,
   "status": "passed"
 });
 });

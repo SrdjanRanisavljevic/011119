@@ -1,6 +1,6 @@
 package core.classic.methods;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.watchers.MyLogger;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.MultiTouchAction;
@@ -9,6 +9,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.touch.TouchActions;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,24 +21,27 @@ import static core.json.parsers.ConfigJasonFileReading.getPlatformUnderTest;
 
 public class Swipe {
 
+    public static int screenHeight;
+    public static int screenWidth;
 
-    public static void swipeUp() throws IOException {
+
+    public static void swipeUp() throws FileNotFoundException {
         Dimension screenDim = Drivers.getMobileDriver().manage().window().getSize();
         int height = screenDim.height;
         int width = screenDim.width;
         if (getPlatformUnderTest().getPlatformName().equals("ios")) {
             MyLogger.log.info("Swipe up using iOS Driver");
             int x = width / 2;
-            double startY = height * 0.80;
-            double finalY = height * 0.20;
-            new TouchAction(Drivers.getMobileDriver()).longPress(PointOption.point(x, (int) startY))
+            double startY = height * 0.70;
+            double finalY = height * 0.30;
+            new TouchAction(Drivers.getMobileDriver()).press(PointOption.point(x, (int) startY))
                     .moveTo(PointOption.point(x, (int) -finalY))
                     .release()
                     .perform();
         } else {
             MyLogger.log.info("Swipe up using android Driver");
             int x = width / 2;
-            double startY = height * 0.70;
+            double startY = height * 0.80;
             double finalY = height * 0.20;
             new TouchAction(Drivers.getMobileDriver()).press(PointOption.point(x, (int) startY))
                     .moveTo(PointOption.point(x, (int) finalY))
@@ -46,7 +50,66 @@ public class Swipe {
         }
     }
 
-    public static void swipeUpPress() throws IOException{
+
+    public static void customSwipeUp () throws FileNotFoundException{
+        Dimension screenDim = Drivers.getMobileDriver().manage().window().getSize();
+        int height = screenDim.height;
+        int width = screenDim.width;
+        if (getPlatformUnderTest().getPlatformName().equals("ios")) {
+            MyLogger.log.info("Swipe up using iOS Driver");
+            int x = width / 2;
+            double startY = height * 0.60;
+            double finalY = height * 0.30;
+            new TouchAction(Drivers.getMobileDriver()).press(PointOption.point(x, (int) startY))
+                    .moveTo(PointOption.point(x, (int) -finalY))
+                    .release()
+                    .perform();
+        } else {
+            MyLogger.log.info("Swipe up using android Driver");
+            double x = width / 2;
+            double startY = height * 0.60;
+            double finalY = height * 0.30;
+            TouchAction action = new TouchAction(Drivers.getMobileDriver());
+            action.press(PointOption.point((int) x,(int)startY))
+                    .waitAction(new WaitOptions().withDuration(Duration.ofMillis(600)))
+                    .moveTo(PointOption.point((int) x, (int)finalY))
+                    .release()
+                    .perform();
+        }
+    }
+
+    // Swipe down to refresh screen
+    public static void customSwipeDown() throws FileNotFoundException {
+        Dimension screenDim = Drivers.getMobileDriver().manage().window().getSize();
+        int height = screenDim.height;
+        int width = screenDim.width;
+        if (getPlatformUnderTest().getPlatformName().equals("ios")) {
+            MyLogger.log.info("Swipe down using iOS Driver");
+            int x = width / 2;
+            double startY = height * 0.16;
+            double finalY = height * 0.45;
+            new TouchAction(Drivers.getMobileDriver()).longPress(PointOption.point(x, (int) startY))
+                    .moveTo(PointOption.point(x, (int) finalY))
+                    .release()
+                    .perform();
+        } else {
+            MyLogger.log.info("Swipe down using android Driver");
+            int x = width / 2;
+            double startY = height * 0.16;
+            double finalY = height * 0.45;
+            new TouchAction(Drivers.getMobileDriver()).press(PointOption.point(x, (int) startY))
+                    .waitAction(new WaitOptions().withDuration(Duration.ofMillis(600)))
+                    .moveTo(PointOption.point(x, (int) finalY))
+                    .release()
+                    .perform();
+        }
+    }
+
+
+
+
+
+    public static void swipeUpPress() throws IOException {
         Dimension screenDim = Drivers.getMobileDriver().manage().window().getSize();
         int height = screenDim.height;
         int width = screenDim.width;
@@ -224,7 +287,7 @@ public class Swipe {
         }
     }
 
-    public static void findElementToClickOnItDownInPage(By by) {
+    public static void findElementToClickOnItDownInPage(By by) throws FileNotFoundException {
         WebElement we = null;
         int count = 0;
         while (count < 10) {
@@ -238,7 +301,10 @@ public class Swipe {
             } catch (WebDriverException e) {
                 if (e.getMessage().contains("could not be located")) {
                     MyLogger.log.info("Performing swipe down to find element" + by + " up in page");
-                    MobileGestures.mobileSwipe("up");
+
+                        Swipe.swipeUp();
+
+//                    MobileGestures.mobileSwipe("up");
                 } else {
                     MyLogger.log.info("Verify method because element " + by + "is still not visible after swiping");
                 }
@@ -490,5 +556,12 @@ public class Swipe {
             Drivers.getMobileDriver().executeScript("mobile: dragFromToForDuration", params);
         }
     }
+
+    public void customScroll () {
+     TouchActions action = new TouchActions(Drivers.getMobileDriver());
+            action.scroll(500, 1500);
+            action.perform();
+    }
+
 
 }

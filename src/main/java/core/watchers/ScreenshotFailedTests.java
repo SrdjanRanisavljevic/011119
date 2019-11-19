@@ -1,6 +1,6 @@
 package core.watchers;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import cucumber.api.Scenario;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -53,7 +53,9 @@ public class ScreenshotFailedTests {
     public static void screenshotFailedTestCucumber(Scenario scenario) throws Exception {
         try {
             String screenshotDirectory = System.getProperty("screenshotDirectory", "target/screenshots");
-            String screenshotAbsolutePath = screenshotDirectory + File.separator + scenario.getId() + "_" + scenario.getName() + "_" + name() + ".png";
+//           String screenshotAbsolutePath = screenshotDirectory + File.separator + scenario.getId() + "_" + scenario.getName() + "_" + name() + ".png";
+             String screenshotAbsolutePath = screenshotDirectory + File.separator + scenario.getName().substring(0,12) + ".png";
+
             File screenshot = new File(screenshotAbsolutePath);
             if (createFile(screenshot)) {
                 try {

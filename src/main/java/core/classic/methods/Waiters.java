@@ -1,6 +1,6 @@
 package core.classic.methods;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.watchers.MyLogger;
 import io.appium.java_client.AppiumFluentWait;
 import io.appium.java_client.MobileElement;
@@ -45,11 +45,30 @@ public class Waiters {
     }
 
     public void waitForElementVisibility(MobileElement element) {
-        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 30);
+        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 180);
         wait.ignoring(NoSuchElementException.class)
                 .pollingEvery(Duration.ofMillis(500))
                 .until(ExpectedConditions.visibilityOf(element));
     }
+
+    // M  A  I  N      W  A  I  T  E  R
+    public void waitForElementVisibilityMobileElement(MobileElement element) {
+        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 180);
+        wait.ignoring(NoSuchElementException.class)
+                .pollingEvery(Duration.ofMillis(500))
+                .until(ExpectedConditions.visibilityOf(element));
+    }
+
+    // M A I N    S L E E P    W A I T E R
+    public void sleep(int time) {
+        try {
+            MyLogger.log.info("Sleeping now for " + time/1000 + " seconds because there is no better solution");
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            MyLogger.log.debug("Cannot Sleep");
+        }
+    }
+
 
     public void simulateWaiterInsteadOsThreadSleep(MobileElement element, int timeout) {
         WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), timeout);
@@ -57,7 +76,7 @@ public class Waiters {
     }
 
     public void waitForMobileElementToBeClickable(MobileElement element) {
-        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 30);
+        WebDriverWait wait = new WebDriverWait(Drivers.getMobileDriver(), 300);
         wait.ignoring(NoSuchElementException.class)
                 .pollingEvery(Duration.ofMillis(500))
                 .until(ExpectedConditions.elementToBeClickable(element));

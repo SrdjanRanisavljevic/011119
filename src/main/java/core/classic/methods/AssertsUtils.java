@@ -1,6 +1,6 @@
 package core.classic.methods;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.watchers.MyLogger;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
@@ -225,6 +225,11 @@ public class AssertsUtils {
     public void AssertEquals(String xpath, String expectedValue, Attribute attribute, String errorMessage) {
         AssertEquals(By.xpath(xpath), expectedValue, attribute, errorMessage);
     }
+
+    public void AssertEquals(String expectedValue, String errorMessage) {
+        AssertEquals(expectedValue, errorMessage);
+    }
+
 
     private void AssertEquals(By by, String expectedValue, Attribute attribute, String errorMessage) {
         assertEquals(expectedValue, Drivers.getMobileDriver().findElement(by).getAttribute(attribute.toString()));

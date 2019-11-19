@@ -1,6 +1,6 @@
 package core.managers;
 
-import api.drivers.Drivers;
+import pages.drivers.Drivers;
 import core.constants.Arg;
 import core.constants.Resources;
 import core.json.parsers.ConfigJasonFileReading;
