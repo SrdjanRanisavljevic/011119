@@ -295,3 +295,74 @@ Scenario: DCMEA-0003340 Delegate to Approve - Parallel In Person Signing
     And Click on Completed and verify that the document is in completed folder
     And Sign out - from home screen
 
+
+    @sanity
+    Scenario: DCMEA-0001636 Shard NA1: In Person : Parallel approver
+        And Log in with user from "NA1"
+        And Click on get signature in person
+        And Select document from phone storage
+        And Enter agreement name and message
+        And Click on recipients button on send page
+        And Turn off complete in order listed
+        And Enter in person signer from shard: "AU1B"
+        And Assign Approver role to the recipient from shard: "AU1B"
+        And Enter additional recipient from shard: "JP1B"
+        And Assign Approver role to the recipient from shard: "JP1B"
+        And Enter additional recipient from shard: "EU1B"
+        And Assign Approver role to the recipient from shard: "EU1B"
+        And Enter additional recipient from shard: "IN1B"
+        And Assign Approver role to the recipient from shard: "IN1B"
+        And Click on Add Me button
+        And Assign Approver role to the recipient from shard: "NA1"
+        And Click on done on Recipients Page
+        And Click on send button on get signature in person
+        And Approve the agreement as Sender in parallel approval flow
+        And Approve the agreement in in person signing flow
+        And Sign out - from home screen
+        And Log in with user from "IN1B" and approve, then log out
+        And Log in with user from "EU1B" and approve, then log out
+        And Log in with user from "JP1B" and approve, then log out
+        When User is logged in as sender from shard "NA1"
+        Then Agreement should be in completed folder
+
+    @reggression @stage @android
+    Scenario: DCMEA-0003304 Delegators Approve & Signer - Sequential In Person Signing + ADD ME (last)
+        And Log in with user from "NA1"
+        And Click on get signature in person
+        And Select document from phone storage
+        And Enter agreement name and message
+        And Click on recipients button on send page
+        And Enter in person signer from shard: "NA12"
+        And Enter additional recipient from shard: "NA13"
+        And Click on Add Me button
+        And Assign delegator to approver role to the recipient from shard: "NA13"
+        And Assign delegator to signer role to the recipient from shard: "NA1"
+        And Click on done on Recipients Page
+        And Click on send button on get signature in person
+        And Sign the agreement in in person signing flow
+        And Sign out - from home screen
+
+        And Log in with user from "NA13"
+        And Click on waiting for you
+        And Select agreement you want to delegate and click on it
+        And Delegate agreement for approval to the recipient from shard: "NA14"
+        And Sign out - from home screen
+
+        And Log in with user from "NA14"
+        And Click on waiting for you
+        And Select agreement you want to Approve and click on it
+        And Click on Approve button on agreements screen
+        And Sign out - from home screen
+
+        And Log in with user from "NA1"
+        And Click on waiting for you
+        And Select agreement you want to delegate and click on it
+        And Delegate agreement for signing to the recipient from shard: "NA15"
+        And Sign out - from home screen
+
+        And Log in with user from "NA15"
+        And Click on waiting for you
+        And Select agreement you want to sign and click on it
+        And Sign the agreement
+        And Click on Completed and verify that the document is in completed folder
+       # And Sign out - from home screen
