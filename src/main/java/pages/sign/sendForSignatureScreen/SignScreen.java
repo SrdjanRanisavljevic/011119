@@ -26,12 +26,15 @@ public class SignScreen {
 
     }
 
+    public static String agreementName = null;
+    public static String agreementMessage = null;
+    private String messageSectionExpectedText = "Agreement Name: " + agreementName + " Message: " + "\" "+ agreementMessage + "\"" ;
     public static String deviceId;
     private final Waiters waiters = new Waiters();
     private final AssertsUtils assertsUtils = new AssertsUtils();
     private final Gestures gestures = new Gestures();
     private  final Swipe swipe = new Swipe();
-    public static String agreementName = null;
+
 
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/btn_open_sign\")")
@@ -63,6 +66,9 @@ public class SignScreen {
 
     @AndroidFindBy(xpath = "//android.widget.TabWidget/android.view.View[1]")
     private MobileElement keyboardIcon;
+
+    @AndroidFindBy(xpath = "//android.widget.LinearLayout/android.widget.TextView[2]")
+    private MobileElement messageSection;
 
     @AndroidFindBy(xpath = "//android.view.View[3]/android.view.View[2]/android.widget.Button[2]")
     private MobileElement applyOnEditSignatureScreen;
@@ -222,6 +228,25 @@ public class SignScreen {
         }
     }
 
+    public String getActualMessageSectionText () {
+        MyLogger.log.info("Actual message screen text: " + messageSection.getText() );
+        return messageSection.getText();
+    }
+
+    public SignScreen verifyMessageSection() {
+        MyLogger.log.info("Verifying Message section");
+        try {
+            assert messageSectionExpectedText.equals(getActualMessageSectionText()) : "expected " + messageSectionExpectedText + " but got instead " + getActualMessageSectionText();
+            MyLogger.log.info("Message section OK!");
+            clickDone();
+            return this;
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Agreement name and message are not written well in message section");
+        }
+
+    }
+
     public SignScreen dismissTapHereToChangePopUp() {
         try {
             MyLogger.log.info("TAP HERE TO CHANGE pop-up is displayed");
@@ -240,5 +265,7 @@ public class SignScreen {
     }
         return this;
     }
+
+
 
 }

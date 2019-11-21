@@ -12,11 +12,14 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.bridj.cpp.std.list;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import pages.drivers.Drivers;
+import pages.sign.completedScreen.CompletedScreen;
+import pages.sign.homeScreen.HomeScreen;
 import pages.sign.sendForSignatureScreen.RecursionLimiter;
 
 import java.io.FileNotFoundException;
@@ -76,12 +79,13 @@ public class WaitingForYouScreen {
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/history_menu\")")
     private MobileElement historyOnMoreMenu;
 
-
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"To Delegate\")")
+    private MobileElement toDelegateSection;
 
 
     // Finding "NO DOCUMENTS" on WFY page does not fail the test. It is posible scenario, in case user had only this agreement on Waiting for you screen
     public WaitingForYouScreen waitingForWFYScrenToLoadAfterSigning() throws TimeoutException {
-        sleep(5000);
+        waiters.sleep(5000);
         waiters.waitForElementVisibilityMobileElement(search);
         waiters.waitForMobileElementToBeClickable(search);
         waiters.waitForElementVisibilityMobileElement(emptyAgreementsScreen);
@@ -113,7 +117,7 @@ public class WaitingForYouScreen {
     // Finding "NO DOCUMENTS" on WFY page in this method throws assertion error and fails the test
     public WaitingForYouScreen waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen() throws TimeoutException {
         MyLogger.log.info("Verifying elements on Waiting For you page, waiting to load");
-        sleep(5000);
+        waiters.sleep(5000);
         waiters.waitForElementVisibilityMobileElement(search);
         waiters.waitForMobileElementToBeClickable(search);
         waiters.waitForElementVisibilityMobileElement(emptyAgreementsScreen);
@@ -148,9 +152,10 @@ public class WaitingForYouScreen {
     public WaitingForYouScreen clickBackButton() {
         try {
             MyLogger.log.info("Clicking on back button on Waiting for you page");
-            waiters.waitForMobileElementToBeClickable(backButton);
-            gestures.clickOnMobileElement(backButton);
-            return this;
+            while(new AssertsUtils().isElementVisible(new HomeScreen().getCompleted())) {
+                waiters.waitForMobileElementToBeClickable(backButton);
+                gestures.clickOnMobileElement(backButton);
+            } return this;
         } catch (WebDriverException e) {
             throw new AssertionError("Cannot click on back on waiting for you page");
         }
@@ -170,6 +175,7 @@ public class WaitingForYouScreen {
     }
 
     static int rnum = 5;
+
     public WaitingForYouScreen clickOnAgreementOnWaitingForYouPage() throws FileNotFoundException {
 //        if (rnum < 0)
 //            throw new AssertionError("MAXIMUM DEPT");
@@ -186,15 +192,15 @@ public class WaitingForYouScreen {
                 gestures.clickOnMobileElement(moreButton);
                 MyLogger.log.info("Click on sign button on more menu on waiting for you screen");
                 waiters.waitForMobileElementToBeClickable(signButtonInMoreMenu);
-                sleep(2000);
+                waiters.sleep(2000);
                 gestures.clickOnMobileElement(signButtonInMoreMenu);
                 return this;
             } else {
                 MyLogger.log.info("No agreement present in waiting for me, RELOADING SCREEN!!!!");
                 searchField.clear();
-                sleep(4000);
+                waiters.sleep(4000);
                 Swipe.customSwipeDown();
-                sleep(10000);
+                waiters.sleep(10000);
                 clickOnSearchbuttonAndEnterAgreementName();
                 clickOnAgreementOnWaitingForYouPage();
                 return this;
@@ -209,14 +215,39 @@ public class WaitingForYouScreen {
         return null;
     }
 
-    public void sleep(int time) {
+    public WaitingForYouScreen verifyThatAgreementIsInCurrentSection() throws FileNotFoundException {
+//         RecursionLimiter.emerge();
         try {
-            MyLogger.log.info("Sleeping now for " + time/1000 + " seconds because there is no better solution");
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            MyLogger.log.debug("Cannot Sleep");
+            MyLogger.log.info("Trying to find the document;");
+            AppiumDriver driver = Drivers.getMobileDriver();
+            List<MobileElement> listAgr = (List<MobileElement>) driver.findElementsByXPath("//android.widget.TextView[@text='" + agreementName + "']");
+            boolean isPresent = listAgr.size() > 0;
+            if (isPresent) {
+                MobileElement agreement = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='" + agreementName + "']");
+                MyLogger.log.info("AGREEMENT FOUND!!!");
+                return this;
+            } else {
+                MyLogger.log.info("No agreement present on current screen, RELOADING SCREEN!!!!");
+                searchField.clear();
+                waiters.sleep(4000);
+                Swipe.customSwipeDown();
+                waiters.sleep(10000);
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    MyLogger.log.debug("Cannot Sleep");
+                }
+                clickOnSearchbuttonAndEnterAgreementName();
+                verifyThatAgreementIsInCurrentSection();
+
+                return this;
+            }
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            throw new AssertionError("CANNOT FIND THE AGREEMENT ON CURRENT SCREEN EVEN AFTER SEVERAL RELOADS");
         }
     }
+
 
     public WaitingForYouScreen dismisTapToRevealQuickActions() {
         try {
@@ -239,7 +270,7 @@ public class WaitingForYouScreen {
             MyLogger.log.info("Dismiss More Button Drop Down");
             AppiumDriver driver = Drivers.getMobileDriver();
             waiters.waitForElementVisibilityMobileElement(historyOnMoreMenu);
-            sleep(1000);
+            waiters.sleep(1000);
             ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.ESCAPE));
             return this;
         } catch (Exception e) {
@@ -248,8 +279,57 @@ public class WaitingForYouScreen {
         }
     }
 
+    public WaitingForYouScreen verifyThatDocumentIsUnderWantedSection(String section) {
+         MyLogger.log.info("Verifying that document is under " + section);
+        try {
+            waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen();
+            waiters.sleep(2000);
+            Swipe.customSwipeDown();
+            waitingForWFYScrenToLoadAfterSigning();
+            clickOnSearchbuttonAndEnterAgreementName();
+            AppiumDriver driver = Drivers.getMobileDriver();
+            MobileElement agreement = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='" + agreementName + "']");
+            int toDelegateIndex = Integer.parseInt(toDelegateSection.getAttribute("index"));
+            int agreementIndex = Integer.parseInt(agreement.getAttribute("index"));
+            if (toDelegateIndex == 0 && agreementIndex == 1) {
+                MyLogger.log.info("Agreement is under " + section);
+                searchField.clear();
+                waiters.sleep(3000);
+            } else {
+                throw new AssertionError("Agreement is not under " + section);
+            }
+            return this;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Cannot verify that document is under " +section);
+        }
+    }
 
 
+    public WaitingForYouScreen verifyThatDocumentIsNOTUnderWantedSection(String section) {
+        MyLogger.log.info("Verify that document is NOT under " + section);
+        try {
+            waitingForWFYScrenToLoadAfterSigning();
+            waiters.sleep(2000);
+            Swipe.customSwipeDown();
+            waitingForWFYScrenToLoadAfterSigning();
+            clickOnSearchbuttonAndEnterAgreementName();
+            AppiumDriver driver = Drivers.getMobileDriver();
+            List<MobileElement> listAgr = (List<MobileElement>) driver.findElementsByXPath("//android.widget.TextView[@text='" + agreementName + "']");
+            List<MobileElement> listDel = (List<MobileElement>) driver.findElementsByXPath("//android.widget.TextView[@text='" + section + "']");
+            if (listAgr.size() == 0) {
+                MyLogger.log.info("Agreement is NOT under the " + section + " and this is how it should be");
+                searchField.clear();
+                waiters.sleep(3000);
+                clickBackButton();
+                return this;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Cannot verify that agreement is not under " + section);
+        } return this;
+
+    }
 }
 
 

@@ -48,8 +48,9 @@ public class HomeScreen {
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"android:id/content\")")
     private MobileElement homeScreen;
 
-
-
+    public MobileElement getCompleted() {
+        return completed;
+    }
 
     public HomeScreen clickSendForSignature() {
         try {

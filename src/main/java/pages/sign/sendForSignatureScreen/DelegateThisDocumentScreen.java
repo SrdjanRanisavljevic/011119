@@ -35,6 +35,8 @@ public class DelegateThisDocumentScreen {
 
     public static String delegateeMessage = null;
 
+    private final String toSendThisDocumentToAnotherIndividualExpected = "To send this document to another individual for signature, enter their email address and a message below.";
+
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"delegatee-email\")")
     private MobileElement delegateeEmailField;
@@ -47,6 +49,9 @@ public class DelegateThisDocumentScreen {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textMatches(\"Delegate\")")
     private MobileElement delegateButtonTablet;
+
+    @AndroidFindBy(xpath = "//android.view.View[1]")
+    private MobileElement sendThisDocumentToAnotherIndividual;
 
 
 
@@ -97,4 +102,15 @@ public class DelegateThisDocumentScreen {
                 throw new AssertionError("Cannot click on delegate button on Delegate This Document Page");
             }
     }
-}
+
+    public DelegateThisDocumentScreen verifyTextOnDelegateThisDocumentWebView() {
+        MyLogger.log.info("Verifying text on delegate this document web view");
+            waiters.waitForElementVisibilityMobileElement(sendThisDocumentToAnotherIndividual);
+            String toSendThisDocumentToAnotherIndividualActual = sendThisDocumentToAnotherIndividual.getText();
+            assert toSendThisDocumentToAnotherIndividualExpected.equals(toSendThisDocumentToAnotherIndividualActual) : "Expected " + toSendThisDocumentToAnotherIndividualExpected + " but got instead " + toSendThisDocumentToAnotherIndividualActual;
+            MyLogger.log.info("Text on delegate this document is ok!");
+            return this;
+        }
+
+    }
+

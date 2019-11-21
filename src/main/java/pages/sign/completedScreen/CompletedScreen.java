@@ -12,12 +12,13 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.PageFactory;
+import pages.sign.waitingForYouScreen.WaitingForYouScreen;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class CompletedScreen {
+public class CompletedScreen extends WaitingForYouScreen {
 
     public CompletedScreen () {
         AppiumDriver driver = Drivers.getMobileDriver();
@@ -104,37 +105,7 @@ public class CompletedScreen {
         }
     }
 
-    public CompletedScreen verifyThatAgreementIsInCompletedSection() throws FileNotFoundException {
-//         RecursionLimiter.emerge();
-        try {
-            MyLogger.log.info("Trying to find the document;");
-            AppiumDriver driver = Drivers.getMobileDriver();
-            List<MobileElement> lista = (List<MobileElement>) driver.findElementsByXPath("//android.widget.TextView[@text='" + agreementName + "']");
-            boolean isPresent = lista.size() > 0;
-            if (isPresent) {
-                MobileElement agreement = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='" + agreementName + "']");
-                MyLogger.log.info("AGREEMENT FOUND IN COMPLETED SECTION!!!");
-                return this;
-            } else {
-                MyLogger.log.info("No agreement present on COMPLETED screen, RELOADING SCREEN!!!!");
-                searchField.clear();
-                sleep(4000);
-                Swipe.customSwipeDown();
-                sleep(10000);
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    MyLogger.log.debug("Cannot Sleep");
-                }
-                clickOnSearchbuttonAndEnterAgreementName();
-                verifyThatAgreementIsInCompletedSection();
-                return this;
-            }
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
-            throw new AssertionError("CANNOT FIND THE AGREEMENT ON COMPLETED SCREEN EVEN AFTER SEVERAL RELOADS");
-        }
-    }
+
 
     public void sleep(int time) {
         try {

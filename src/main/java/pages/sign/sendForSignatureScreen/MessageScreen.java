@@ -26,11 +26,12 @@ public class MessageScreen extends SignScreen {
 
     public static String agreementName = null;
     public static String agreementMessage = null;
-
     private final Waiters waiters = new Waiters();
     private final AssertsUtils assertsUtils = new AssertsUtils();
     private final Gestures gestures = new Gestures();
     private  final Swipe swipe = new Swipe();
+    private String agreementNamePlaceHolder = "Required";
+    private String messagePlaceHolder = "Please review and sign this document.";
 
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/agreement_name\")")
@@ -66,5 +67,29 @@ public class MessageScreen extends SignScreen {
             throw new AssertionError("Cannot enter Agreement Message");
         }
     }
+
+    public String getAgreementNameActualPlaceHolder() {
+        return agreementNameField.getText();
+    }
+
+    public String getMessageActualPlaceHolder() {
+        return agreementBody.getText();
+    }
+
+    public MessageScreen verifyMessageScreenPlaceHolders() {
+        MyLogger.log.info("Verifying Message screen placeholders");
+        try {
+            assert agreementNamePlaceHolder.equals(getAgreementNameActualPlaceHolder()) : "expected " + agreementNamePlaceHolder + " but got instead " + getAgreementNameActualPlaceHolder();
+            assert messagePlaceHolder.equals(getMessageActualPlaceHolder()) : "expected " + messagePlaceHolder + " but got instead " + getMessageActualPlaceHolder();
+            MyLogger.log.info("Message page Agreement Name and Message placeholders are OK!");
+            clickDone();
+            return this;
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new AssertionError("Agreement name and message are not written well in message section");
+        }
+    }
+
+
 
 }

@@ -77,7 +77,7 @@ public class SignStepDefinitions {
     }
 
     @And("^Enter additional recipient from shard: \"([^\"]*)\"$")
-    public void enterAdditionalSignerFromShard(String arg0) throws FileNotFoundException {
+    public void enterAdditionalRecipientFromShard(String arg0) throws FileNotFoundException {
         new RecipientsOnGSIPScreen()
                 .swipeToFindAddMeAndRecipientNameField();
         new RecipientsOnGSIPScreen()
@@ -116,35 +116,7 @@ public class SignStepDefinitions {
 
     //     S  E  T         E  N  V  I  R  O  N  M  E  N  T
 
-    @Given("^The environment is set to: \"([^\"]*)\"$")
-    public void setServer(String arg0) throws FileNotFoundException {
-        if(arg0.equalsIgnoreCase("production")) {
-            new SignLauncherScreen()
-                    .dismissUpdateMessageIfPresent()
-                    .clickRightArrowButtonToGetToSignInButton()
-                    .clickOnLoginButton();
-        } else {
-            new SignLauncherScreen()
-                    .clickRightArrowButtonToGetToSignInButton()
-                    .clickOnLoginButton();
-            new SignLoginScreen()
-                    .enterUserName(users.getProdUser())
-                    .enterPassword()
-                    .clickOnSignInButton();
-            new HomeScreen()
-                    .clickOnSettingsButton();
-            new SettingsScreen()
-                    .clickOnAboutButton()
-                    .clickOnVersionButton()
-                    .clickYesOrOk();
-            if (arg0.equalsIgnoreCase("stage")) {
-                new SettingsScreen().chooseStageServer().clickYesOrOk();
-            }
-            if (arg0.equalsIgnoreCase("preview")) {
-                new SettingsScreen().clickYesOrOk();
-            }
-        }
-    }
+
 
     @Given("^User sets the environment$")
     public void setServer() throws FileNotFoundException {
@@ -177,12 +149,34 @@ public class SignStepDefinitions {
     }
 
 
+
     // S  E  N  D      S   C   R   E   E   N       S   T   E   P   S
 
     @And("^Turn off complete in order listed$")
     public void turnOffCompleteInOrderListed() throws FileNotFoundException {
         RecipientsScreen recipientsScreen = new RecipientsScreen();
         recipientsScreen.clickOnCompleteInOrderListed();
+    }
+
+    @Then("^Verify message screen place holders$")
+    public void verifyMessageScreenPlaceHolders() {
+        new SendForSignatureScreen().clickOnMessageButton();
+        new MessageScreen().verifyMessageScreenPlaceHolders();
+    }
+
+    @Then("^Verify message section$")
+    public void verifyMessageSection() {
+        new SignScreen().verifyMessageSection().clickDone();
+
+    }
+    @And("^Verify that document IS under \"([^\"]*)\" section$")
+    public void verifyThatDocumentIsUnderWantedSection(String arg0) {
+        new WaitingForOthersScreen().verifyThatDocumentIsUnderWantedSection(arg0);
+    }
+
+    @And("^Verify that document is NOT under \"([^\"]*)\" section$")
+    public void verifyThatAgreementIsNotUnderToDelegateSection(String arg0) {
+        new WaitingForYouScreen().verifyThatDocumentIsNOTUnderWantedSection(arg0);
     }
 
 
@@ -233,7 +227,7 @@ public class SignStepDefinitions {
         new CompletedScreen()
                 .waitingForCompletedScreenToLoad()
                 .clickOnSearchbuttonAndEnterAgreementName()
-                .verifyThatAgreementIsInCompletedSection();
+                .verifyThatAgreementIsInCurrentSection();
     }
 
     @Then("^Agreement should be in completed folder$")
@@ -242,7 +236,7 @@ public class SignStepDefinitions {
         new CompletedScreen()
                 .waitingForCompletedScreenToLoad()
                 .clickOnSearchbuttonAndEnterAgreementName()
-                .verifyThatAgreementIsInCompletedSection();
+                .verifyThatAgreementIsInCurrentSection();
     }
 
 
@@ -251,6 +245,16 @@ public class SignStepDefinitions {
     public void clickOnWaitingForOthers() throws FileNotFoundException {
         new HomeScreen().clickOnWaitingForOthers();
     }
+
+    @Then("^Verify that document is successfully sent$")
+    public void verifyDocumentIsSuccessfullySent() throws FileNotFoundException {
+        new HomeScreen().clickOnWaitingForOthers();
+        new WaitingForOthersScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .verifyThatAgreementIsInCurrentSection();
+    }
+
 
     @And("^Click on send for signature$")
     public void clickOnSendForSignature() throws FileNotFoundException {
@@ -320,6 +324,35 @@ public class SignStepDefinitions {
                 .clickOnSignOut()
                 .clickYesOrOk();
     }
+
+    @And("^Log in with user from \"([^\"]*)\" and and delegate to user from \"([^\"]*)\"$")
+    public void logInAndSign(String arg0, String arg1) throws FileNotFoundException, InterruptedException {
+        new SignLauncherScreen().dismissUpdateMessageIfPresent();
+        new SignLoginScreen()
+                .enterUserName(users.getUser(arg0))
+                .enterPassword()
+                .clickOnSignInButton();
+        new HomeScreen().clickOnWaitingForYou();
+        new WaitingForYouScreen()
+                .waitingForAgreementsToLoadAfterClickOnWFYButtonOnHomeScreen()
+                .clickOnSearchbuttonAndEnterAgreementName()
+                .clickOnAgreementOnWaitingForYouPage();
+        new DelegateThisDocumentScreen()
+                .verifyTextOnDelegateThisDocumentWebView()
+                .enterDelegateeMail(users.getUser(arg1))
+                .enterDelegateeMessage()
+                .clickOnDelegateButton();
+        new PostSignScreen()
+                .waitingForPostSignScreenToLoad()
+                .isActualPostDelegationMessageAsExpectedSigning(users.getUser(arg0))
+                .backToHomePage();
+        new HomeScreen()
+                .clickOnSettingsButton();
+        new SettingsScreen()
+                .clickOnSignOut()
+                .clickYesOrOk();
+    }
+
 
     @And("^Log in with user from \"([^\"]*)\" and approve, then log out$")
     public void logInAndApprove(String arg0) throws FileNotFoundException, InterruptedException {
@@ -442,6 +475,7 @@ public class SignStepDefinitions {
     @And("^Delegate agreement for signing to the recipient from shard: \"([^\"]*)\"$")
     public void delegateAgreementForSigning(String arg0) throws FileNotFoundException {
         new DelegateThisDocumentScreen()
+                .verifyTextOnDelegateThisDocumentWebView()
                 .enterDelegateeMail(users.getUser(arg0))
                 .enterDelegateeMessage()
                 .clickOnDelegateButton();
