@@ -1,5 +1,7 @@
 package pages.sign.waitingForOthersScreen;
 
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.offset.PointOption;
 import pages.drivers.Drivers;
 import pages.sign.waitingForYouScreen.WaitingForYouScreen;
 import core.classic.methods.AssertsUtils;
@@ -17,6 +19,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import static core.json.parsers.ConfigJasonFileReading.getAndroidJasonResults;
 
 public class WaitingForOthersScreen extends WaitingForYouScreen {
 
@@ -56,6 +59,8 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
 
 
 
+
+
     public WaitingForOthersScreen clickOnSpecificUser(String user) {
         try {
             MyLogger.log.info("Click on user: " + user);
@@ -70,28 +75,36 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
                 return this;
             }
             else {
-               sleep(2000);
-                clickOnSpecificUser(user);
+               waiters.sleep(2000);
+               clickOnSpecificUser(user);
             }return this;
         } catch (Exception e) {
             throw new AssertionError("Cannot click on specific user in paralel workflow");
         }
     }
 
-    public WaitingForOthersScreen clickBackButton() {
-        try {
-            MyLogger.log.info("Clicking on back button on Waiting for others page");
-            waiters.waitForMobileElementToBeClickable(backButton);
-            gestures.clickOnMobileElement(backButton);
-            return this;
-        } catch (WebDriverException e) {
-            throw new AssertionError("Cannot click on back on waiting for others page");
-        }
-    }
+//    public WaitingForOthersScreen clickBackButton() throws FileNotFoundException {
+//        try {
+//            if(getAndroidJasonResults().getDeviceID().equals("3204db2bb5fe7121")) {
+//                MyLogger.log.info("Click on back button on Samsung tablet");
+//                waiters.sleep(4000);
+//                    new TouchAction(Drivers.getMobileDriver()).press(PointOption.point(70, 120))
+//                            .release()
+//                            .perform();
+//                    return this;
+//                }
+//            MyLogger.log.info("Clicking on back button on Waiting for others page");
+//            waiters.waitForMobileElementToBeClickable(backButton);
+//            gestures.clickOnMobileElement(backButton);
+//            return this;
+//        } catch (WebDriverException e) {
+//            throw new AssertionError("Cannot click on back on waiting for others page");
+//        }
+//    }
 
 
     public WaitingForOthersScreen verifyThatSignButtonIsNotPresent() throws FileNotFoundException {
-//        RecursionLimiter.emerge();
+
         try {
             MyLogger.log.info("Trying to find the document;");
             AppiumDriver driver = Drivers.getMobileDriver();
@@ -104,9 +117,9 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
                 gestures.clickOnMobileElement(moreButton);
                 MyLogger.log.info("Waiting for sign/delegate/approve button");
                 waiters.waitForMobileElementToBeClickable(signButtonInMoreMenu);
-                sleep(5000);
+                waiters.sleep(5000);
                 gestures.clickOnMobileElement(signButtonInMoreMenu);
-                sleep(3000);
+                waiters.sleep(3000);
                 List<MobileElement> okOnThisActionIsNotAvailable = (List<MobileElement>) driver.findElementsById("android:id/button1");
                 boolean isOkPresent = okOnThisActionIsNotAvailable.size() > 0;
                 if (isOkPresent) {
@@ -116,6 +129,7 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
                     gestures.clickOnMobileElement(okOnThisActionIsNotAvailable.get(0));
                     searchField.clear();
                     waitingForWFYScrenToLoadAfterSigning();
+                    waiters.sleep(1000);
                     clickBackButton();
                 } else {
                     throw new AssertionError("Host Signing/Approval/Delgation are available, and this should not be!");
@@ -124,9 +138,9 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
             } else {
                 MyLogger.log.info("No agreement present in waiting for me, RELOADING SCREEN!!!!");
                 searchField.clear();
-                sleep(3000);
+                waiters.sleep(3000);
                 Swipe.customSwipeDown();
-                sleep(10000);
+                waiters.sleep(10000);
                 clickOnSearchbuttonAndEnterAgreementName();
                 clickOnAgreementOnWaitingForYouPage();
                 return this;
@@ -136,6 +150,8 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
             throw new AssertionError("Host sign/delegate/approve is enabled, and that should not be!");
         }
     }
+
+
 
 
 

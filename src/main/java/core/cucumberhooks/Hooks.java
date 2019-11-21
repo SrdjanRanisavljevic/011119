@@ -113,12 +113,14 @@ public class Hooks {
     @Before(order = 5)
     public String getScenarioName(Scenario scenario) throws Exception {
         DelegateThisDocumentScreen.delegateeMessage = "Test: " + scenario.getName() + " executed on " + scenarioStartDate();
+        SignScreen.agreementMessage = "Test: " + scenario.getName() + " executed on " + scenarioStartDate();
         return MessageScreen.agreementMessage = "Test: " + scenario.getName() + " executed on " + scenarioStartDate();
         }
 
     @Before(order = 6)
     public String getScenarioNumber(Scenario scenario) throws Exception {
         MyLogger.log.info("AGREEMENT NAME: " + scenario.getName().substring(0,12) + " " + scenarioStartDate());
+        SignScreen.agreementName = scenario.getName().substring(0,12) + " " + scenarioStartDate();
         WaitingForYouScreen.agreementName = scenario.getName().substring(0,12) + " " + scenarioStartDate();
         PostSignScreen.agreementName = scenario.getName().substring(0,12) + " " + scenarioStartDate();
         CompletedScreen.agreementName = scenario.getName().substring(0,12) + " " + scenarioStartDate();
