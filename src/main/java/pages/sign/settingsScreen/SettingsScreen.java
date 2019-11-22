@@ -1,5 +1,8 @@
 package pages.sign.settingsScreen;
 
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import pages.drivers.Drivers;
 import pages.sign.getSignatureInPersonScreen.GetSignatureInPersonScreen;
 import core.classic.methods.AssertsUtils;
@@ -72,7 +75,18 @@ public class SettingsScreen {
     public SettingsScreen clickOnVersionButton() {
         try {
             MyLogger.log.info("Clicking on version button");
-            gestures.clickOnMobileElement(versionButton);
+            long period = 10000;
+            long start = System.currentTimeMillis();
+            long end = start + period;
+            boolean condition = new AssertsUtils().isElementVisible(yesOKButton);
+            while(!condition){
+                gestures.clickOnMobileElement(versionButton);
+                waiters.sleep(500);
+                start += 500;
+                condition = new AssertsUtils().isElementVisible(yesOKButton);
+                if(start>end)
+                    throw new AssertionError("Unable to position itself on next screen in " + period + " sec");
+            }
             return this;
         }catch (WebDriverException e) {
             throw new AssertionError("Cannot click on version button");

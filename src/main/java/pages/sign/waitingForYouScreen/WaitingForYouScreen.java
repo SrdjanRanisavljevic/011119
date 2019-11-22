@@ -6,6 +6,7 @@ import core.classic.methods.Swipe;
 import core.classic.methods.Waiters;
 import core.watchers.MyLogger;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
@@ -58,6 +59,10 @@ public class WaitingForYouScreen {
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/search\")")
     private MobileElement search;
 
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/agreement_list_section_header\")")
+    private MobileElement sectionHeader;
+
+
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/lv_agreements\")")
     private MobileElement emptyAgreementsScreen;
 
@@ -78,6 +83,9 @@ public class WaitingForYouScreen {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/history_menu\")")
     private MobileElement historyOnMoreMenu;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/agreementName\")")
+    private MobileElement agreementNameContainer;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"To Delegate\")")
     private MobileElement toDelegateSection;
@@ -152,11 +160,12 @@ public class WaitingForYouScreen {
     public WaitingForYouScreen clickBackButton() {
         try {
             MyLogger.log.info("Clicking on back button on Waiting for you page");
-            while(new AssertsUtils().isElementVisible(new HomeScreen().getCompleted())) {
+            while(!new AssertsUtils().isElementVisible(new HomeScreen().getCompleted())) {
                 waiters.waitForMobileElementToBeClickable(backButton);
                 gestures.clickOnMobileElement(backButton);
             } return this;
         } catch (WebDriverException e) {
+            e.printStackTrace();
             throw new AssertionError("Cannot click on back on waiting for you page");
         }
     }
@@ -289,26 +298,33 @@ public class WaitingForYouScreen {
             clickOnSearchbuttonAndEnterAgreementName();
             AppiumDriver driver = Drivers.getMobileDriver();
             MobileElement agreement = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='" + agreementName + "']");
-            int toDelegateIndex = Integer.parseInt(toDelegateSection.getAttribute("index"));
-            int agreementIndex = Integer.parseInt(agreement.getAttribute("index"));
-            if (toDelegateIndex == 0 && agreementIndex == 1) {
-                MyLogger.log.info("Agreement is under " + section);
+            boolean isAgreementVisible = new AssertsUtils().isElementVisible(agreement);
+
+            List<MobileElement> container = driver.findElements(MobileBy.xpath("//android.widget.ListView/*"));
+            String sectionHeaderString = section + " (1)";
+
+            if (sectionHeader.getText().equals(sectionHeaderString) && agreementNameContainer.getText().equals(agreementName) && container.size()==2 ) {
+                MyLogger.log.info("Agreement is under " + section + " section!");
+                waiters.waitForMobileElementToBeClickable(searchField);
                 searchField.clear();
                 waiters.sleep(3000);
+                clickBackButton();
             } else {
                 throw new AssertionError("Agreement is not under " + section);
+
             }
             return this;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new AssertionError("Cannot verify that document is under " +section);
+            throw new AssertionError("Cannot verify that document is under " + section);
         }
     }
 
 
-    public WaitingForYouScreen verifyThatDocumentIsNOTUnderWantedSection(String section) {
-        MyLogger.log.info("Verify that document is NOT under " + section);
+    public WaitingForYouScreen verifyThatDocumentIsNOTInCurrentScreen(String screen) {
+
         try {
+            MyLogger.log.info("Verify that document is NOT under " + screen);
             waitingForWFYScrenToLoadAfterSigning();
             waiters.sleep(2000);
             Swipe.customSwipeDown();
@@ -316,9 +332,10 @@ public class WaitingForYouScreen {
             clickOnSearchbuttonAndEnterAgreementName();
             AppiumDriver driver = Drivers.getMobileDriver();
             List<MobileElement> listAgr = (List<MobileElement>) driver.findElementsByXPath("//android.widget.TextView[@text='" + agreementName + "']");
-            List<MobileElement> listDel = (List<MobileElement>) driver.findElementsByXPath("//android.widget.TextView[@text='" + section + "']");
+
             if (listAgr.size() == 0) {
-                MyLogger.log.info("Agreement is NOT under the " + section + " and this is how it should be");
+                MyLogger.log.info("Agreement is NOT under the " + screen + " screen, and this is how it should be!");
+                waiters.waitForMobileElementToBeClickable(searchField);
                 searchField.clear();
                 waiters.sleep(3000);
                 clickBackButton();
@@ -326,7 +343,7 @@ public class WaitingForYouScreen {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new AssertionError("Cannot verify that agreement is not under " + section);
+            throw new AssertionError("Cannot verify that agreement is not under " + screen + " screen");
         } return this;
 
     }

@@ -41,7 +41,10 @@ public class PostSignScreen {
     @AndroidFindBy(xpath = "//android.widget.LinearLayout[1]")
     private MobileElement backToAgreementsListButton;
 
-    @AndroidFindBy(xpath = "//android.widget.LinearLayout[2]")
+//    @AndroidFindBy(xpath = "//android.widget.LinearLayout[2]")
+//    private MobileElement backToHomeButton;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"Back to Home\")")
     private MobileElement backToHomeButton;
 
 
@@ -95,7 +98,9 @@ public class PostSignScreen {
     public PostSignScreen backToHomePage() {
         try {
             MyLogger.log.info("Clicking on more options button and than on back to home button");
+            waiters.waitForMobileElementToBeClickable(moreOptionsButton);
             gestures.clickOnMobileElement(moreOptionsButton);
+            waiters.waitForMobileElementToBeClickable(backToHomeButton);
             gestures.clickOnMobileElement(backToHomeButton);
             return this;
         }catch (WebDriverException e) {

@@ -43,11 +43,14 @@ public class SignScreen {
     @AndroidFindBy(uiAutomator = "new UiSelector().textContains(\"start\")")
     private MobileElement start;
 
-    @AndroidFindBy(xpath = "//android.view.View[5]/android.view.View/android.view.View[2]/android.view.View]")
+    @AndroidFindBy(xpath = "//android.view.View[2]/android.view.View]")
     private MobileElement finish;
 
     @AndroidFindBy(xpath = "//android.view.View[5]/android.view.View/android.view.View/android.view.View[3]")
     private MobileElement finishOnTablet;
+
+    @AndroidFindBy(xpath = "//android.view.View[5]/android.view.View/android.view.View[2]/android.view.View")
+    private MobileElement finishOnS10;
 
     @AndroidFindBy(xpath = "//android.widget.Button")
     private MobileElement signatureField;
@@ -111,7 +114,6 @@ public class SignScreen {
     public SignScreen clickOnKeyboardIcon() {
         AppiumDriver driver = Drivers.getMobileDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        MyLogger.log.info("CONTEXT IS: " + driver.getContext());
         try {
             MyLogger.log.info("Click on keyboard icon");
             waiters.waitForMobileElementToBeClickable(keyboardIcon);
@@ -189,6 +191,13 @@ public class SignScreen {
                 waiters.sleep(4000);
                 waiters.waitForElementVisibilityMobileElement(finishOnTablet);
                 gestures.clickOnMobileElement(finishOnTablet);
+                return this;
+            }
+            if (deviceId.equals("RF8M33AB6RV")) {
+                MyLogger.log.info("Click on finish button on Samsung s10");
+                waiters.sleep(4000);
+                waiters.waitForElementVisibilityMobileElement(finishOnS10);
+                gestures.clickOnMobileElement(finishOnS10);
                 return this;
             }
             else{

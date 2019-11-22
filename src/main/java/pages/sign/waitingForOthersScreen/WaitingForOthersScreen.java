@@ -127,6 +127,7 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
                     MyLogger.log.info("Click ok on This action is not available for this agreement");
                     waiters.waitForMobileElementToBeClickable(okOnThisActionIsNotAvailable.get(0));
                     gestures.clickOnMobileElement(okOnThisActionIsNotAvailable.get(0));
+                    waiters.waitForElementVisibilityMobileElement(searchField);
                     searchField.clear();
                     waitingForWFYScrenToLoadAfterSigning();
                     waiters.sleep(1000);
@@ -137,6 +138,7 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
                 return this;
             } else {
                 MyLogger.log.info("No agreement present in waiting for me, RELOADING SCREEN!!!!");
+                waiters.waitForMobileElementToBeClickable(searchField);
                 searchField.clear();
                 waiters.sleep(3000);
                 Swipe.customSwipeDown();

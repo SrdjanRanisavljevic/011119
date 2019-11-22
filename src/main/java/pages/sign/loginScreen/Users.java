@@ -13,7 +13,7 @@ public class Users {
 
     private final ArrayList<String> shardCodes = new ArrayList<>(
 
-            Arrays.asList("NA1",
+            Arrays.asList("NA1", "NA12", "NA13", "NA14", "NA15",
                     "NA1B",
                     "NA2",
                     "NA2B",
@@ -34,6 +34,10 @@ public class Users {
     private final ArrayList<String> userNames = new ArrayList<>(
 
             Arrays.asList("echosign.mtest.na1+2@gmail.com",
+                    "echosign.mtest.na1+4@gmail.com",
+                    "echosign.mtest.na1+5@gmail.com",
+                    "echosign.mtest.na1+6@gmail.com",
+                    "echosign.mtest.na1+7@gmail.com",
                     "echosign.mtest.na1+3@gmail.com",
 
                     "echosign.mtest.na2@gmail.com",

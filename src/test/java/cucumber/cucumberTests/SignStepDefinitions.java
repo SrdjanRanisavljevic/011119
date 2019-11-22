@@ -174,9 +174,9 @@ public class SignStepDefinitions {
         new WaitingForOthersScreen().verifyThatDocumentIsUnderWantedSection(arg0);
     }
 
-    @And("^Verify that document is NOT under \"([^\"]*)\" section$")
+    @And("^Verify that document is NOT in \"([^\"]*)\" screen$")
     public void verifyThatAgreementIsNotUnderToDelegateSection(String arg0) {
-        new WaitingForYouScreen().verifyThatDocumentIsNOTUnderWantedSection(arg0);
+        new WaitingForYouScreen().verifyThatDocumentIsNOTInCurrentScreen(arg0);
     }
 
 

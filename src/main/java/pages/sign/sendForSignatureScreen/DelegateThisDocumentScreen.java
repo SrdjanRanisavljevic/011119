@@ -50,9 +50,6 @@ public class DelegateThisDocumentScreen {
     @AndroidFindBy(uiAutomator = "new UiSelector().textMatches(\"Delegate\")")
     private MobileElement delegateButtonTablet;
 
-    @AndroidFindBy(xpath = "//android.view.View[1]")
-    private MobileElement sendThisDocumentToAnotherIndividual;
-
 
 
     // This method should be replaced by Assertation method that checks if all elements of this screen are present
@@ -105,7 +102,10 @@ public class DelegateThisDocumentScreen {
 
     public DelegateThisDocumentScreen verifyTextOnDelegateThisDocumentWebView() {
         MyLogger.log.info("Verifying text on delegate this document web view");
-            waiters.waitForElementVisibilityMobileElement(sendThisDocumentToAnotherIndividual);
+        AppiumDriver driver = Drivers.getMobileDriver();
+        waiters.waitForMobileElementToBeClickable(delegateeEmailField);
+        MobileElement sendThisDocumentToAnotherIndividual = (MobileElement) driver.findElementByXPath("//android.view.View[1]");
+            waiters.waitForMobileElementToBeClickable(sendThisDocumentToAnotherIndividual);
             String toSendThisDocumentToAnotherIndividualActual = sendThisDocumentToAnotherIndividual.getText();
             assert toSendThisDocumentToAnotherIndividualExpected.equals(toSendThisDocumentToAnotherIndividualActual) : "Expected " + toSendThisDocumentToAnotherIndividualExpected + " but got instead " + toSendThisDocumentToAnotherIndividualActual;
             MyLogger.log.info("Text on delegate this document is ok!");
