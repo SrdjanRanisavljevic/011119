@@ -16,6 +16,8 @@ import core.json.parsers.AppiumReadJsonResults;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import service.organization.User;
+
 import java.io.FileNotFoundException;
 
 import static core.json.parsers.ConfigJasonFileReading.getAndroidJasonResults;
@@ -436,6 +438,23 @@ public class SignStepDefinitions {
                 .clickOnFinishButton()
                 .clickOnTapToSign();
     }
+
+    @And("^Sign the agreement in in person signing flow as user \"([^\"]*)\" and verify messages$")
+    public void signTheAgreementInPersonFlowAndVerifyMessages(String arg0) throws FileNotFoundException {
+        new GetSignatureInPersonScreen()
+                .verifyPleasePassTheDeviceMessage(users.getUser(arg0))
+                .clickOnOKProceedOnDialog()
+                .verifyPleasePassTheDeviceMessage(users.getUser(arg0))
+                .clickOnOKProceedOnDialog();
+        new SignScreen()
+                .clickOnStartButton()
+                .clickOnSignatureField()
+                .clickOnKeyboardIcon()
+                .clickOnApplyButtonOnEditSignatureScreen()
+                .clickOnFinishButton()
+                .clickOnTapToSign();
+    }
+
 
     @And("^Approve the agreement in in person signing flow$")
     public void approveAgreementInPersonFlow() throws FileNotFoundException {

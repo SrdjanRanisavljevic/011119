@@ -160,9 +160,12 @@ public class WaitingForYouScreen {
     public WaitingForYouScreen clickBackButton() {
         try {
             MyLogger.log.info("Clicking on back button on Waiting for you page");
-            while(!new AssertsUtils().isElementVisible(new HomeScreen().getCompleted())) {
+            int counter = 0;
+            while(!new AssertsUtils().isElementVisible(new HomeScreen().getCompleted()) && counter < 5) {
                 waiters.waitForMobileElementToBeClickable(backButton);
                 gestures.clickOnMobileElement(backButton);
+                waiters.sleep(500);
+                counter++;
             } return this;
         } catch (WebDriverException e) {
             e.printStackTrace();

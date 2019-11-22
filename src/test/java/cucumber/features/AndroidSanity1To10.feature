@@ -96,7 +96,24 @@ Feature: Android Sanity 1-10
     And Click on Completed and verify that the document is in completed folder
 
 
-
+#3 - Bug DCMEA 3908 + Test case in jira should be changed - after sending, user is redirected to delegate in person, not sign with in person step 7 and 8
+  @sanity @regression @delegation
+  Scenario: DCMEA-0000389 Approve Delegators - Parallel In Person Signing with ADD ME (first)
+    And Log in with user from "na1"
+    And Click on get signature in person
+    And Select document from phone storage
+    And Enter agreement name and message
+    And Click on recipients button on send page
+    And Turn off complete in order listed
+    And Enter in person signer from shard: "na12"
+    And Click on Add Me button
+    And Enter additional recipient from shard: "na13"
+    And Assign delegator to approver role to the recipient from shard: "na1"
+    And Assign delegator to approver role to the recipient from shard: "na13"
+    And Click on done on Recipients Page
+    And Click on send button on get signature in person
+    And Delegate agreement for approval to the recipient from shard: "na14"
+    And Sign the agreement in in person signing flow as user "na1" and verify messages
 
 
 

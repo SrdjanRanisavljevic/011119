@@ -17,6 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 import pages.drivers.Drivers;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 
 public class RecipientsScreen extends SignScreen {
@@ -25,7 +26,6 @@ public class RecipientsScreen extends SignScreen {
         AppiumDriver driver = Drivers.getMobileDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
-
 
 
     private final Waiters waiters = new Waiters();

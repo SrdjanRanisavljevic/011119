@@ -61,6 +61,7 @@ public class WaitingForOthersScreen extends WaitingForYouScreen {
 
 
 
+
     public WaitingForOthersScreen clickOnSpecificUser(String user) {
         try {
             MyLogger.log.info("Click on user: " + user);

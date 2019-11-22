@@ -1,5 +1,6 @@
 package pages.sign.getSignatureInPersonScreen;
 import pages.drivers.Drivers;
+import pages.sign.sendForSignatureScreen.PostSignScreen;
 import pages.sign.sendForSignatureScreen.SendForSignatureScreen;
 import core.classic.methods.AssertsUtils;
 import core.classic.methods.Gestures;
@@ -12,6 +13,8 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
+
 
 public class GetSignatureInPersonScreen extends SendForSignatureScreen {
 
@@ -20,9 +23,19 @@ public class GetSignatureInPersonScreen extends SendForSignatureScreen {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
+
+
+
+
+
+    private final String pleasePassString = "Please pass the device to the signer, %USER_EMAIL%";
+    private final String byProceedingYouAfirmString = "By proceeding, you affirm that you are %USER_EMAIL% and are authorized to sign this agreement.";
+
     private final Waiters waiters = new Waiters();
     private final AssertsUtils assertsUtils = new AssertsUtils();
     private final Gestures gestures = new Gestures();
+
+
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"android:id/button1\")")
     private MobileElement okOnSignatureInPerson;
@@ -35,6 +48,33 @@ public class GetSignatureInPersonScreen extends SendForSignatureScreen {
 
     @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"com.adobe.echosign:id/sign_now\")")
     private MobileElement sendButton;
+
+    @AndroidFindBy(uiAutomator = "new UiSelector().resourceId(\"android:id/message\")")
+    private MobileElement popUp;
+
+
+    public GetSignatureInPersonScreen verifyPleasePassTheDeviceMessage(String signerEmail) {
+        MyLogger.log.info("Verify Please pass the device message");
+        waiters.waitForElementVisibilityMobileElement(popUp);
+        String actualPleasePassString = popUp.getText();
+        String expectedPleasePassString = pleasePassString.replace("%USER_EMAIL%", signerEmail);
+        assert expectedPleasePassString.equals(actualPleasePassString) : "expected " + expectedPleasePassString + " but got instead " + actualPleasePassString;
+        MyLogger.log.info("Please pass message is ok!");
+        return this;
+    }
+
+    public GetSignatureInPersonScreen verifyByProceeedingMessageYouAfirm(String signerEmail) {
+        MyLogger.log.info("Verify by proceeding, you afirm message");
+        waiters.sleep(1000);
+        waiters.waitForElementVisibilityMobileElement(popUp);
+        String actualByProceedingYouAfirmMessage= popUp.getText();
+        String expectedByProceedingYouAfirmMessage = byProceedingYouAfirmString.replace("%USER_EMAIL%", signerEmail);
+        assert expectedByProceedingYouAfirmMessage.equals(actualByProceedingYouAfirmMessage) : "expected " + expectedByProceedingYouAfirmMessage + " but got instead " + actualByProceedingYouAfirmMessage;
+        MyLogger.log.info("By proceeding, you afirm message is ok!");
+        return this;
+    }
+
+
 
     public GetSignatureInPersonScreen clickOnOKProceedOnDialog() {
         try {
